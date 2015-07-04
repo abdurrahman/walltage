@@ -1,0 +1,8 @@
+body { font: 100% Helvetica, sans-serif; color: #333; padding-top: 50px; padding-bottom: 20px; }
+body .body-content { padding-left: 15px; padding-right: 15px; }
+
+.dl-horizontal dt { white-space: normal; }
+
+input, select, textarea { max-width: 280px; }
+
+/*# sourceMappingURL=style.css.map */
