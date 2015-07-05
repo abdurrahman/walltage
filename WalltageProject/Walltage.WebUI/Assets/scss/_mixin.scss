@@ -1,0 +1,24 @@
+﻿
+
+
+@mixin background-animation($keyframe) {
+	-webkit-animation: $keyframe 1s linear infinite;
+	   -moz-animation: $keyframe 1s linear infinite;
+				 animation: $keyframe 1s linear infinite; 
+}
+
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content; 
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  } 
+}
