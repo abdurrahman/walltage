@@ -6,22 +6,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="search-section">
-    <div class="container">
-        <div class="jumbotron">
-            <h1>Hi there !</h1>
-            <p>This web site maybe could makes beautify your desktop screen.</p>
-            <div class="input-group col-md-6">
-                <input type="search" class="form-control input-lg" placeholder="Find your screen..." aria-describedby="addon" />
-                <span class="input-group-addon" id="addon"><i class="fa fa-search"></i></span>
-            </div>
+<section class="banner-section">
+    <!-- list items for bg images -->
+    <ul class="bg-slider">
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="jumbotron">
+        <h1>Hi there !</h1>
+        <p>This web site maybe could makes beautify your desktop screen.</p>
+        <div class="input-group col-md-6 col-md-offset-3">
+            <input type="search" class="form-control input-lg" placeholder="Find your screen..." aria-describedby="addon" />
+            <span class="input-group-addon" id="addon"><i class="fa fa-search"></i> Search</span>
         </div>
-</div>
+    </div>
 </section>
 
 <div class="container-fluid">
     <div class="row">
-@*        @foreach (var item in Model)
+        @*@foreach (var item in Model)
         {
             <div class="col-xs-6 col-md-3">
                 <a href="~/wallpaper/@item.Id" class="thumbnail">

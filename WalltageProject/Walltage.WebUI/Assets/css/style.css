@@ -23,38 +23,104 @@ body {
 .navbar {
   margin-bottom: 0; }
 
-@-webkit-keyframes animateBackground {
-  from {
-    background-image: url("~/Assets/images/navy-blue-sea.jpg"); }
-  to {
-    background-image: url("~/Assets/images/kangamagus-highway.jpg"); } }
-@-moz-keyframes animateBackground {
-  from {
-    background-image: url("~/Assets/images/navy-blue-sea.jpg"); }
-  to {
-    background-image: url("~/Assets/images/kangamagus-highway.jpg"); } }
-@-ms-keyframes animateBackground {
-  from {
-    background-image: url("~/Assets/images/navy-blue-sea.jpg"); }
-  to {
-    background-image: url("~/Assets/images/kangamagus-highway.jpg"); } }
-@keyframes animateBackground {
-  from {
-    background-image: url("~/Assets/images/navy-blue-sea.jpg"); }
-  to {
-    background-image: url("~/Assets/images/kangamagus-highway.jpg"); } }
-.search-section {
-  margin: 0;
-  padding: 0;
+@-webkit-keyframes fade-out {
+  33% {
+    opacity: 1; }
+  66% {
+    opacity: 0; } }
+@-moz-keyframes fade-out {
+  33% {
+    opacity: 1; }
+  66% {
+    opacity: 0; } }
+@-ms-keyframes fade-out {
+  33% {
+    opacity: 1; }
+  66% {
+    opacity: 0; } }
+@keyframes fade-out {
+  33% {
+    opacity: 1; }
+  66% {
+    opacity: 0; } }
+.banner-section {
+  display: table;
+  margin: 0 auto;
   width: 100%;
-  background-image: url("~/Assets/images/kangamagus-highway.jpg");
+  text-align: center;
+  /*-- Full Height --*/
+  height: 80vh;
+  color: rgba(255, 255, 255, 0.9);
+  /*-- Create an Overlay --*/ }
+.banner-section:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  background-color: rgba(118, 144, 164, 0.4);
+  z-index: 0; }
+.banner-section ul.bg-slider {
+  /*-- Image 2 --*/
+  /*-- Image 3 --*/ }
+.banner-section ul.bg-slider li {
+  width: 100%;
+  height: 80%;
+  position: absolute;
   background-size: cover;
-  -webkit-animation: animateBackground 1s linear infinite;
-  -moz-animation: animateBackground 1s linear infinite;
-  animation: animateBackground 1s linear infinite; }
-.search-section .jumbotron {
+  background-repeat: no-repeat;
+  background-position: 100%;
+  z-index: 0;
+  opacity: 0;
+  -webkit-animation: fade-out 10s linear infinite;
+  -moz-animation: fade-out 10s linear infinite;
+  animation: fade-out 10s linear infinite;
+  background-image: url(../assets/images/search-bg.jpg); }
+.banner-section ul.bg-slider li:nth-child(2) {
+  background-image: url(../assets/images/search-bg2.jpg);
+  -webkit-animation-delay: 3s;
+  /* Chrome, Safari, Opera */
+  -moz-animation-delay: 3s;
+  animation-delay: 3s; }
+.banner-section ul.bg-slider li:nth-child(3) {
+  background-image: url(../assets/images/search-bg3.jpg);
+  -webkit-animation-delay: 3s;
+  /* Chrome, Safari, Opera */
+  -moz-animation-delay: 3s;
+  animation-delay: 3s; }
+.banner-section .jumbotron {
+  display: table-cell;
+  vertical-align: middle;
+  position: relative;
+  z-index: 4;
+  padding: 0 5%;
   background: transparent;
   text-align: center; }
+.banner-section .jumbotron .input-group .input-lg {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: none;
+  color: #fff; }
+.banner-section .jumbotron .input-group .input-lg::-webkit-input-placeholder {
+  color: #fff; }
+.banner-section .jumbotron .input-group .input-lg:-moz-placeholder {
+  color: #fff; }
+.banner-section .jumbotron .input-group .input-lg::-moz-placeholder {
+  color: #fff; }
+.banner-section .jumbotron .input-group .input-lg:-ms-input-placeholder {
+  color: #fff; }
+.banner-section .jumbotron .input-group .input-lg:focus {
+  background: rgba(255, 255, 255, 0.6); }
+.banner-section .jumbotron .input-group span.input-group-addon {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+  background-color: #e44c65;
+  cursor: default; }
 
 footer {
   display: block;
