@@ -28,5 +28,25 @@ namespace Walltage.WebUI.Controllers
 
             return View();
         }
+
+        public ViewResult Top100()
+        {
+            return View();
+        }
+
+        public ViewResult Random()
+        {
+            return View();
+        }
+
+        public ViewResult MostViewed()
+        {
+            return View();
+        }
+
+        public ViewResult Search()
+        {
+            return View();
+        }
     }
 }
