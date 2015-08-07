@@ -9,5 +9,7 @@ namespace Walltage.Domain.Entities
     public class WalltageDbContext : DbContext
     {
         public DbSet<Wallpaper> Wallpapers { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Resolution> Resolutions { get; set; }
     }
 }
