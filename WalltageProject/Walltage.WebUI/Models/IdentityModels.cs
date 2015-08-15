@@ -6,6 +6,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 using System;
 using MySql.Data.Entity;
+using System.Collections;
+using Walltage.Domain.Entities;
+using System.Collections.Generic;
 
 
 namespace Walltage.WebUI.Models
@@ -13,29 +16,9 @@ namespace Walltage.WebUI.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        //[Required(ErrorMessage="Bu alan zorunludur.")]
-        [MaxLength(50)]
-        public string Name { get; set; }
-
-        //[Required(ErrorMessage = "Bu alan zorunludur.")]
-        [MaxLength(50)]
-        public string SurName { get; set; }
-
-        //[Required(ErrorMessage = "Bu alan zorunludur.")]
-        [MaxLength(10)]
-        public string MobilePhone { get; set; }
-        [MaxLength(26)]
-        public string IBAN { get; set; }
+        public DateTime LastLogin { get; set; }
         public DateTime Creation { get; set; }
-        [MaxLength(128)]
-        public string CreatedBy { get; set; }
-        public bool IsBuyerBefore { get; set; }
 
-        [StringLength(11, ErrorMessage = "TC Kimlik 11 karakter uzunluğunda olmalıdır.")]
-        [MaxLength(11)]
-        public string TCNo { get; set; }
-        public bool IsActive { get; set; }
-        //public int AddressId { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

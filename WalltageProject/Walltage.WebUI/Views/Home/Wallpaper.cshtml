@@ -1,0 +1,64 @@
+﻿@model Walltage.WebUI.Models.WallpaperViewModel
+@{
+    ViewBag.Title = "Wallpaper";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <section class="detail-section">
+        <aside class="sidebar">
+            <div class="properties">
+                <h2>Properties</h2><hr />
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <th>Resolution</th>
+                            <td>:</td>
+                            <td>@Model.ResolutionId</td>
+                        </tr>
+                        <tr>
+                            <th>Size</th>
+                            <td>:</td>
+                            <td>@{ int size = (Model.Size / 1024); @size }  KB</td>
+                        </tr>
+                        <tr>
+                            <th>Category</th>
+                            <td>:</td>
+                            <td>@Model.CategoryId</td>
+                        </tr>                        
+                        <tr>
+                            <th>Views</th>
+                            <td>:</td>
+                            <td>@Model.ViewCount</td>
+                        </tr>                        
+                        <tr>
+                            <th>Added</th>
+                            <td>:</td>
+                            <td>@Model.UploadDate.ToString("D")</td>
+                        </tr>
+                        <tr>
+                            <th>Uploaded By</th>
+                            <td>:</td>
+                            <td><a href="">@Model.UploaderId</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tags">
+                <h2>Tags</h2><hr />
+                <ul>
+                    <li><a href="">#nature</a></li>
+                    <li><a href="">#mountain</a></li>
+                    <li><a href="">#fresh</a></li>
+                    <li><a href="">#spirit</a></li>
+                    <li><a href="">#love</a></li>
+                </ul>
+            </div>
+            <p>
+                <a href="btn btn-warning pull-left"><i class="fa fa-star"></i> Add to Favorites</a>
+                <a href="btn btn-warning pull-right"><i class="fa fa-warning"></i> Report</a>
+            </p>
+        </aside>
+        <div class="showcase">
+            <img class="wallpaper unselectable" src="@Url.Content("~/Wallpapers/" + @Model.ImgPath)" alt="@Model.Name" />
+        </div>
+    </section>

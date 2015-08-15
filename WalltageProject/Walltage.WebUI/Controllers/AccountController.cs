@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -8,6 +9,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Walltage.Domain.Entities;
+using Walltage.Domain.Repositories;
+using Walltage.WebUI.Infrastructures;
 using Walltage.WebUI.Models;
 
 namespace Walltage.WebUI.Controllers
@@ -18,8 +22,11 @@ namespace Walltage.WebUI.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+        private IWallpaperRepository repo;
+
+        public AccountController(IWallpaperRepository repo)
         {
+            this.repo = repo;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -72,10 +79,9 @@ namespace Walltage.WebUI.Controllers
             {
                 return View(model);
             }
-
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,19 +157,19 @@ namespace Walltage.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, Creation = DateTime.Now };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    ViewBag.Message = "<p style='color:#0ce3ac'>Please check your email and confirm your email address.</p>";
+                    return View();
                 }
                 AddErrors(result);
             }
@@ -401,6 +407,113 @@ namespace Walltage.WebUI.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+
+        private ICategoryRepository categoryRepo;
+        private IResolutionRepository resolutionRepo;
+
+        public ViewResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(WallpaperViewModel model)
+        {
+
+            int lastId = repo.GetAll().LastOrDefault().WallpaperId != null ? repo.GetAll().LastOrDefault().WallpaperId : 1;
+
+            if (model.file != null && model.file.ContentLength > 0)
+            {
+                model.ImgPath = string.Format("walltage-{0}{1}", lastId + 1, Path.GetExtension(model.file.FileName));
+                string path = Path.Combine(Server.MapPath("~/Wallpapers"), model.ImgPath);
+
+                if (((model.file.ContentLength / 1024) / 1024) > 2)
+                {
+                    ViewBag.Message = "Resim boyutu 2 MB'tan yüksek olmamalıdır.";
+                    return View(model);
+                }
+
+                System.Drawing.Image sourceImage = System.Drawing.Image.FromStream(model.file.InputStream);
+
+                if (sourceImage.Width < 1024 || sourceImage.Height < 768)
+                {
+                    ViewBag.Message = "The file must be greater than 1024 pixels wide and greater than to 768 pixels tall.";
+                    return View(model);
+                }
+
+                model.Size = model.file.ContentLength;
+
+                bool result = repo.Insert(new Wallpaper
+                {
+                    Name = model.Name,
+                    CategoryId = model.CategoryId,
+                    ImgPath = model.ImgPath,
+                    UploadDate = DateTime.Now,
+                    Tags = model.Tags,
+                    Size = model.Size,
+                    ResolutionId = model.ResolutionId,
+                    UploaderId = User.Identity.GetUserId(),
+                    ViewCount = 1
+                });
+
+                if (result)
+                {
+                    ViewBag.Message = "Successfull - Wallpaper was uploaded";
+                    model.file.SaveAs(path);
+
+                    System.Drawing.Image original = System.Drawing.Image.FromFile(path);
+                    original = StaticHelper.CreateThumbnail(original, new System.Drawing.Size(256, 200), true);
+                    original.Save(Server.MapPath("~/Wallpapers/thumbs/"+ model.ImgPath));
+                    original.Dispose();
+                    return View();
+                }
+                else
+                {
+                    ViewBag.Message = "Error - Something went wrong";
+                    return View();
+                }
+            }
+
+            ViewBag.Message = "Error - Something went wrong";
+            return View();
+        }
+
+        //public ActionResult Manage()
+        //{
+        //    return View();
+        //}
+
+        //
+        // GET: /Manage/ChangePassword
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangePassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                ViewBag.Message = "Success - Your password has been changed!";
+                return View();
+            }
+            AddErrors(result);
+            return View(model);
         }
 
         protected override void Dispose(bool disposing)

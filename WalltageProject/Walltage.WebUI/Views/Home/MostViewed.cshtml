@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Walltage.WebUI.Models.WallpaperViewModel
+
+@{
     ViewBag.Title = "Most Viewed Wallpapers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,104 +10,17 @@
         <div class="container">
             <h1><i class="fa fa-eye"></i> Most Viewed Wallpapers</h1>
             <div class="grid">
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-89706.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-171500.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-237306.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-237110.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-227057.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-227372.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-114220.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-204738.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-224998.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-56240.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-164335.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-117987.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
+                @foreach (var item in Model.WallpaperList)
+                {
+                    <figure class="effect-apollo">
+                        <img class="lazy" src="~/wallpapers/thumbs/@item.ImgPath" alt="@item.Name" />
+                        <figcaption>
+                            <h2 style="display:none">Strong <span>Apollo</span></h2>
+                            <p>@item.Name</p>
+                            <a href="~/home/wallpaper/@item.WallpaperId">view more...</a>
+                        </figcaption>
+                    </figure>                    
+                }
             </div>
         </div>
     </section>

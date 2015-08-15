@@ -25,6 +25,9 @@ namespace Walltage.WebUI
                 "~/assets/js/ui-bootstrap-tpls.js",
                 "~/assets/js/angular-sanitize.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/dropzonejs").Include(
+                "~/assets/js/dropzone.js"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -39,6 +42,8 @@ namespace Walltage.WebUI
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
                 "~/assets/css/bootstrap.css",
+                "~/assets/css/dropzone.css",
+                "~/assets/css/basic.css",
                 "~/assets/css/style.css"));
 
             BundleTable.Bundles.UseCdn = true;

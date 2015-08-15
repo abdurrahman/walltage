@@ -12,6 +12,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   vertical-align: baseline;
 }
 
+.unselectable {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 html, body {
   height: 100%;
 }
@@ -348,15 +354,96 @@ footer .copyright li i {
   color: #e44c65;
 }
 
-.account-section {
+.account-section, .upload-section {
   padding: 10% 0;
   background-image: url(../assets/images/search-bg2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
-.account-section form {
-  background: rgba(0, 0, 0, 0.7);
+.account-section form, .upload-section form {
+  background: rgba(0, 0, 0, 0.9);
   padding: 15px;
+}
+.account-section form .validation-summary-errors, .upload-section form .validation-summary-errors {
+  margin: 10px 0px 20px;
+  text-align: justify;
+  font-style: italic;
+}
+.account-section form .validation-summary-errors ul, .upload-section form .validation-summary-errors ul {
+  list-style: none;
+}
+
+.upload-section .file-upload-btn {
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+}
+.upload-section .file-upload-btn .upload-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.detail-section {
+  background: #111;
+  padding: 3%;
+  overflow: auto;
+  cursor: default;
+}
+.detail-section .showcase {
+  overflow: hidden;
+  text-align: center;
+}
+.detail-section .showcase .wallpaper {
+  width: 100%;
+  display: block;
+}
+.detail-section .sidebar {
+  float: right;
+  margin-left: 1.5em;
+}
+.detail-section .sidebar h2 {
+  font-size: 2vw;
+  color: #0ce3ac;
+}
+.detail-section .sidebar hr {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.detail-section .sidebar .properties .table {
+  border-spacing: 2px;
+}
+.detail-section .sidebar .properties .table th {
+  font-weight: bold;
+}
+.detail-section .sidebar .tags ul {
+  list-style: none;
+}
+.detail-section .sidebar .tags ul li {
+  position: relative;
+  display: inline-block;
+  margin: 0 4px 4px 0;
+}
+.detail-section .sidebar .tags ul li a {
+  padding: .2em .5em;
+  line-height: 2em;
+  text-decoration: none;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.9);
+}
+.detail-section .sidebar .tags ul li a:hover {
+  -webkit-transition: background-color 0.35s ease-out;
+  -moz-transition: background-color 0.35s ease-out;
+  -o-transition: background-color 0.35s ease-out;
+  transition: background-color 0.35s ease-out;
+  background: #e44c65;
+  color: #FFF;
 }
 
 /*# sourceMappingURL=style.css.map */

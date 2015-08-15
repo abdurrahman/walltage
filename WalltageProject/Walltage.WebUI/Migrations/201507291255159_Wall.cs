@@ -3,7 +3,7 @@ namespace Walltage.WebUI.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class wallidentity : DbMigration
+    public partial class Wall : DbMigration
     {
         public override void Up()
         {
@@ -35,15 +35,8 @@ namespace Walltage.WebUI.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128, storeType: "nvarchar"),
-                        Name = c.String(maxLength: 50, storeType: "nvarchar"),
-                        SurName = c.String(maxLength: 50, storeType: "nvarchar"),
-                        MobilePhone = c.String(maxLength: 10, storeType: "nvarchar"),
-                        IBAN = c.String(maxLength: 26, storeType: "nvarchar"),
+                        LastLogin = c.DateTime(nullable: true, precision: 0),
                         Creation = c.DateTime(nullable: false, precision: 0),
-                        CreatedBy = c.String(maxLength: 128, storeType: "nvarchar"),
-                        IsBuyerBefore = c.Boolean(nullable: false),
-                        TCNo = c.String(maxLength: 11, storeType: "nvarchar"),
-                        IsActive = c.Boolean(nullable: false),
                         Email = c.String(maxLength: 256, storeType: "nvarchar"),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(unicode: false),

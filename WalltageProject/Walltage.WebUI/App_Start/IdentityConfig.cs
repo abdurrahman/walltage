@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,8 +20,21 @@ namespace Walltage.WebUI
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            var email = new MailMessage("walltageweb@gmail.com", message.Destination)
+            {
+                Subject = message.Subject,
+                Body = message.Body,
+                IsBodyHtml = true,
+            };
+            var mailClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587))
+            {
+                Credentials = new NetworkCredential("walltageweb@gmail.com", "71106761"),
+                EnableSsl = true,
+            };
+
+            return mailClient.SendMailAsync(email);
+
+            //return Task.FromResult(0);
         }
     }
 

@@ -1,6 +1,37 @@
-﻿@{
+﻿@model Walltage.WebUI.Models.WallpaperViewModel
+@{
     ViewBag.Title = "Wallpaper Search Result";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Search</h2>
+    <section class="feed-section" style="background:#111">
+        <div class="container"> 
+            @if (ViewBag.Count > 0 )
+            {                
+                <h1><i class="fa fa-search"></i> Search Result : @ViewBag.Count wallpapers found !</h1>
+            }
+            else
+            {
+                <h1><i class="fa fa-search"></i> Search Result : @ViewBag.Count wallpapers found ! </h1>  
+                <div class="grid" style="margin:7% 0">
+                    <p style="text-align:center">We didn't find the wallpaper you're looking for, please try again with another word</p>
+                </div>
+            }
+            <div class="grid">
+                 @foreach (var item in Model.WallpaperList)
+                 {
+                    <figure class="effect-apollo">
+                        <img class="lazy" src="~/wallpapers/thumbs/@item.ImgPath" alt="@item.Name" />
+                        <figcaption>
+                            <h2 style="display:none">Strong <span>Apollo</span></h2>
+                            <p>@item.Name</p>
+                            <a href="~/home/wallpaper/@item.WallpaperId">view more...</a>
+                        </figcaption>
+                    </figure>
+                     
+                 }
+                
+            </div>
+        </div>
+    </section>
+
