@@ -85,22 +85,22 @@ body {
 			background: rgba(255,255,255,0.4);
 			box-shadow:none;
 			color:#fff;
+			font-size: 28px;
 			@include placeholder{color: #fff}
 			&:focus {
 				background: rgba(255,255,255,0.6);
 			}
 		}
-		.input-group span.input-group-addon {
+		.input-group span.input-group-btn button   {
 			@include border-radius(0);
 			background-color: transparent;
-			border:5px solid $primary-color;
+			border:3px solid $primary-color;
 			cursor: pointer;
 			&:hover {
 				@include transition(background-color .3s ease-out);
 				background-color: $primary-color;
 			}
-		}
-		
+		}		
 	}
 }
 

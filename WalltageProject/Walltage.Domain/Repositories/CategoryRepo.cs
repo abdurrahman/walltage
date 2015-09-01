@@ -5,7 +5,7 @@ using Walltage.Domain.Entities;
 
 namespace Walltage.Domain.Repositories
 {
-    public class CategoryRepo : ICategoryRepository
+    public class CategoryRepo : ICategoryRepository, IDisposable
     {
         private static CategoryRepo _instance;
         public static CategoryRepo Instance
@@ -40,13 +40,18 @@ namespace Walltage.Domain.Repositories
             }
         }
 
-
         public IEnumerable<Category> GetAll()
         {
             using (var db = new WalltageDbContext())
             {
                 return db.Categories.ToList();
             }
+        }
+
+        public void Dispose()
+        {
+            //Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

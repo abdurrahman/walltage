@@ -11,27 +11,36 @@
             <h1>Hi there !</h1>
             <p>This web site maybe could makes beautify your desktop screen.</p>
             @using (Html.BeginForm("Search", "Home", FormMethod.Get))
-            {    
+            {
+            <form ng-controller="SearchController">
                 <div class="input-group col-md-6 col-md-offset-3">
-                    <input type="search" name="q" class="form-control input-lg" placeholder="Find your screen..." aria-describedby="addon" />
-                    <span class="input-group-addon" id="addon"><i class="fa fa-search"></i> Search</span>
-                    <input type="submit" value="Search" />
-                </div>                
+                    <input type="search" name="q" class="form-control input-lg" placeholder="Find your screen..." />
+                    <span class="input-group-btn">
+                        <button class="btn btn-lg" type="submit"><i class="fa fa-search"></i> Search</button>
+                    </span>
+                </div>         
+            </form>       
             }
         </div>
     </section>
 
-    <section class="category-section">
+    <section class="category-section" ng-controller="WallpaperController">
         <div class="container">
             <div class="row">
+                <p>{{message}}</p>
                 <div class="col-md-3">
+                    <ul>
+                        <li  ng-repeat="c in categories"><a href="~/home/category/{{c.CategoryId}}" title="{{c.Name}}">{{c.Name}}</a></li>
+                    </ul>
+                </div>
+@*                <div class="col-md-3">
                     <ul>
                         <li><a href="">ABSTRACT</a></li>
                         <li><a href="">ANIMALS</a></li>
                         <li><a href="">ARCHITECTURE</a></li>
                         <li><a href="">BUSINESS</a></li>
                     </ul>
-                </div>
+                </div>*@
                 <div class="col-md-3">                
                     <ul>
                         <li><a href="">CELEBRATIONS</a></li>
@@ -61,7 +70,7 @@
 
     </section>
 
-    <section class="feed-section" ng-controller="WallpaperController" >
+    <section class="feed-section" ng-controller="WallpaperController">
         <div class="container">
             <div class="grid">
                 <figure class="effect-apollo" ng-repeat="wall in wallpapers">
@@ -73,30 +82,6 @@
                     </figcaption>
                 </figure>
 
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-89706.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-171500.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
-                <figure class="effect-apollo">
-                    <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-237306.jpg" alt="" />
-                    <figcaption>
-                        <h2>Strong <span>Apollo</span></h2>
-                        <p>Apollo's last game of pool was so strange.</p>
-                        <a href="">view more...</a>
-                    </figcaption>
-                </figure>
                 <figure class="effect-apollo">
                     <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-237110.jpg" alt="" />
                     <figcaption>

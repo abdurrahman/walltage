@@ -28,6 +28,10 @@ namespace Walltage.WebUI.Models
 
         public HttpPostedFileBase file { get; set; }
 
+        public Wallpaper Wallpaper { get; set; }
+        public Category Category { get; set; }
+        public Resolution Resolution { get; set; }
+
         public IEnumerable<Wallpaper> WallpaperList { get; set; }
     }
 

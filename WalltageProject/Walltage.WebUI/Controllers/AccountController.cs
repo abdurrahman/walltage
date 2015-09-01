@@ -446,14 +446,14 @@ namespace Walltage.WebUI.Controllers
 
                 bool result = repo.Insert(new Wallpaper
                 {
-                    Name = model.Name,
+                    Name = model.Name.ToLower(),
                     CategoryId = model.CategoryId,
                     ImgPath = model.ImgPath,
                     UploadDate = DateTime.Now,
-                    Tags = model.Tags,
+                    Tags = model.Tags.ToLower(),
                     Size = model.Size,
                     ResolutionId = model.ResolutionId,
-                    UploaderId = User.Identity.GetUserId(),
+                    UploaderId = User.Identity.GetUserName(),
                     ViewCount = 1
                 });
 

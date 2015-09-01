@@ -16,6 +16,9 @@ namespace Walltage.Domain.Entities
         public string UploaderId { get; set; }
         public int ResolutionId { get; set; }
         public int CategoryId { get; set; }
+
+        public virtual Category categories { get; set; }
+        public virtual Resolution resolutions { get; set; }
     }
 
     public class Category
@@ -24,7 +27,7 @@ namespace Walltage.Domain.Entities
         public string Name { get; set; }
         public DateTime Creation { get; set; }
 
-        //public virtual ICollection<Wallpaper> wallpaperlist { get; set; }
+        public virtual ICollection<Wallpaper> wallpaperlist { get; set; }
     }
 
     public class Resolution
@@ -33,6 +36,14 @@ namespace Walltage.Domain.Entities
         public string Name { get; set; }
         public DateTime Creation { get; set; }
 
-        //public virtual ICollection<Wallpaper> wallpaperlist { get; set; }
+        public virtual ICollection<Wallpaper> wallpaperlist { get; set; }
+    }
+
+    public class Tag
+    {
+        public int TagId { get; set; }
+        public string Name { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime Creation { get; set; }
     }
 }

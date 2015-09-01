@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Walltage.Domain.Entities;
 using Walltage.Domain.Repositories;
+using Walltage.WebUI.Infrastructures;
 using Walltage.WebUI.Models;
 
 namespace Walltage.WebUI.Controllers
@@ -13,10 +14,15 @@ namespace Walltage.WebUI.Controllers
     public class HomeController : Controller
     {
         private IWallpaperRepository _wallpaperRepo;
+        private ICategoryRepository _categoryRepo;
+        private IResolutionRepository _resolutionRepo;
 
-        public HomeController(IWallpaperRepository wallpaperRepo)
+        
+        public HomeController(IWallpaperRepository wallpaperRepo, ICategoryRepository categoryRepo, IResolutionRepository resolutionRepo)
         {
             _wallpaperRepo = wallpaperRepo;
+            _categoryRepo = categoryRepo;
+            _resolutionRepo = resolutionRepo;
         }
 
         public ActionResult Index()
@@ -40,6 +46,16 @@ namespace Walltage.WebUI.Controllers
             return View();
         }
 
+        public ViewResult Rules()
+        {
+            return View();
+        }
+
+        public ViewResult Faq()
+        {
+            return View();
+        }
+
         public ViewResult Random()
         {
             return View();
@@ -58,7 +74,7 @@ namespace Walltage.WebUI.Controllers
         [HttpGet]
         public ActionResult Search(string q)
         {
-            var result = _wallpaperRepo.GetAll().Where(x => x.Tags.Contains(q) || x.Name.Contains(q)).ToList();
+            var result = _wallpaperRepo.GetAll().Where(x => x.Tags.Contains(q.ToLower()) || x.Name.Contains(q.ToLower())).ToList();
 
             ViewBag.Count = result.Count();
 
@@ -70,11 +86,26 @@ namespace Walltage.WebUI.Controllers
             return View(model);
         }
 
+        //public JsonResult Search(string q)
+        //{
+        //    var result = _wallpaperRepo.GetAll().Where(x => x.Tags.Contains(q.ToLower()) || x.Name.Contains(q.ToLower())).ToList();
+
+        //    ViewBag.Count = result.Count();
+
+        //    WallpaperViewModel model = new WallpaperViewModel
+        //    {
+        //        WallpaperList = result
+        //    };
+
+        //    return Json(model);
+        //}
+
+        #region JsonResults for Angular queries
+
 
         public JsonResult GetWallpapers()
-        { 
-            var wallpaperList = _wallpaperRepo.GetAll().Take(12);
-            return Json(wallpaperList, JsonRequestBehavior.AllowGet);
+        {
+            return Json( _wallpaperRepo.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult FindWallpaperById(string id)
@@ -84,11 +115,20 @@ namespace Walltage.WebUI.Controllers
             return Json(findWallpaperById, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetCategories()
+        {
+            return Json(_categoryRepo.GetAll(), JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         // TODO: It will be detail page after testing..
         public ActionResult Wallpaper(int id)
         {
             var getWallpaper = _wallpaperRepo.FindById(id);
+           // var name =_usermanager.Users.Where(x => x.Id == getWallpaper.UploaderId).Select(x => x.UserName);
 
+            //ViewBag.Username = name;
             WallpaperViewModel model = new WallpaperViewModel
             {
                 Name = getWallpaper.Name,
@@ -100,7 +140,11 @@ namespace Walltage.WebUI.Controllers
                 UploaderId = getWallpaper.UploaderId,
                 UploadDate = getWallpaper.UploadDate,
                 ViewCount = getWallpaper.ViewCount,
-                WallpaperId = getWallpaper.WallpaperId
+                WallpaperId = getWallpaper.WallpaperId,
+                Category = getWallpaper.categories,
+                Resolution = getWallpaper.resolutions,                 
+                //Category = _categoryRepo.FindById(getWallpaper.CategoryId),
+                //Resolution = _resolutionRepo.FindById(getWallpaper.ResolutionId)
             };
 
             _wallpaperRepo.IncreaseToViewCount(getWallpaper.WallpaperId);
@@ -114,9 +158,9 @@ namespace Walltage.WebUI.Controllers
 
             WallpaperViewModel model = new WallpaperViewModel
             {
-                WallpaperList = getCategory
+                WallpaperList = getCategory,
+                Category = _categoryRepo.FindById(id)
             };
-
             return View(model);
         }
     }

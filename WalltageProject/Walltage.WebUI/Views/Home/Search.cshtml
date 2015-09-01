@@ -16,6 +16,15 @@
                 <div class="grid" style="margin:7% 0">
                     <p style="text-align:center">We didn't find the wallpaper you're looking for, please try again with another word</p>
                 </div>
+                using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                {    
+                    <div class="input-group col-md-6 col-md-offset-3">
+                        <input type="search" name="q" class="form-control input-lg" placeholder="Find your screen..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-lg" type="submit"><i class="fa fa-search"></i> Search</button>
+                        </span>
+                    </div>               
+                }
             }
             <div class="grid">
                  @foreach (var item in Model.WallpaperList)

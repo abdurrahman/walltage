@@ -11,5 +11,10 @@ namespace Walltage.Domain.Entities
         public DbSet<Wallpaper> Wallpapers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Resolution> Resolutions { get; set; }
+
+        public WalltageDbContext()
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+        }
     }
 }

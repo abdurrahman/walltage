@@ -5,7 +5,7 @@ using Walltage.Domain.Entities;
 
 namespace Walltage.Domain.Repositories
 {
-    public class WallpaperRepo : IWallpaperRepository
+    public class WallpaperRepo : IWallpaperRepository, IDisposable
     {
         private static WallpaperRepo _instance;
         public static WallpaperRepo Instance
@@ -53,10 +53,9 @@ namespace Walltage.Domain.Repositories
         {
             using (var db = new WalltageDbContext())
             {
-                return db.Wallpapers.Find(id);
+                return db.Wallpapers.Include("categories").Include("resolutions").Where(x => x.WallpaperId == id).FirstOrDefault();
             }
         }
-
 
         public IEnumerable<Wallpaper> GetAll()
         {
@@ -70,7 +69,7 @@ namespace Walltage.Domain.Repositories
         {
             using (var db = new WalltageDbContext())
             {
-                return db.Wallpapers.OrderBy(x => x.ViewCount).ToList();
+                return db.Wallpapers.OrderByDescending(x => x.ViewCount).ToList();
             }
         }
 
@@ -81,7 +80,10 @@ namespace Walltage.Domain.Repositories
 
         public IEnumerable<Wallpaper> GetWallpapersByCategoryId(int CategoryId)
         {
-            throw new NotImplementedException();
+            using (var db = new WalltageDbContext())
+            {
+                return db.Wallpapers.Include("categories").Where(x => x.CategoryId == CategoryId).ToList();
+            }
         }
 
         public IEnumerable<Wallpaper> GetWallpapersByResolutionId(int ResolutionId)
@@ -97,6 +99,13 @@ namespace Walltage.Domain.Repositories
                 getWallpaper.ViewCount = getWallpaper.ViewCount + 1;
                 db.SaveChanges();
             }
+        }
+
+        
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

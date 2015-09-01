@@ -1,4 +1,6 @@
 ﻿@model Walltage.WebUI.Models.WallpaperViewModel
+@using Walltage.WebUI.Infrastructures
+
 @{
     ViewBag.Title = "Wallpaper";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,7 +15,7 @@
                         <tr>
                             <th>Resolution</th>
                             <td>:</td>
-                            <td>@Model.ResolutionId</td>
+                            <td>@Model.Resolution.Name</td>
                         </tr>
                         <tr>
                             <th>Size</th>
@@ -23,7 +25,7 @@
                         <tr>
                             <th>Category</th>
                             <td>:</td>
-                            <td>@Model.CategoryId</td>
+                            <td>@Model.Category.Name</td>
                         </tr>                        
                         <tr>
                             <th>Views</th>
@@ -33,7 +35,7 @@
                         <tr>
                             <th>Added</th>
                             <td>:</td>
-                            <td>@Model.UploadDate.ToString("D")</td>
+                            <td>@StaticHelper.TimeAgo(Model.UploadDate)</td>
                         </tr>
                         <tr>
                             <th>Uploaded By</th>
