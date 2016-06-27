@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walltage.Web", "Walltage.Web\Walltage.Web.csproj", "{FEFCCA0B-0589-4E2F-9337-F3D45074ED60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walltage.Web.Tests", "Walltage.Web.Tests\Walltage.Web.Tests.csproj", "{0C5D8E63-6395-4B26-B8A1-63B9C7C85992}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walltage.Domain", "Walltage.Domain\Walltage.Domain.csproj", "{6D213B40-68E9-4F2E-8B65-E868D0C6EF23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEFCCA0B-0589-4E2F-9337-F3D45074ED60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEFCCA0B-0589-4E2F-9337-F3D45074ED60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEFCCA0B-0589-4E2F-9337-F3D45074ED60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEFCCA0B-0589-4E2F-9337-F3D45074ED60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C5D8E63-6395-4B26-B8A1-63B9C7C85992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C5D8E63-6395-4B26-B8A1-63B9C7C85992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C5D8E63-6395-4B26-B8A1-63B9C7C85992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5D8E63-6395-4B26-B8A1-63B9C7C85992}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D213B40-68E9-4F2E-8B65-E868D0C6EF23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D213B40-68E9-4F2E-8B65-E868D0C6EF23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D213B40-68E9-4F2E-8B65-E868D0C6EF23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D213B40-68E9-4F2E-8B65-E868D0C6EF23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
