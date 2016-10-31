@@ -65,6 +65,8 @@
     <Compile Include="Entities\UserAndLikeMapping.cs" />
     <Compile Include="Entities\UserRole.cs" />
     <Compile Include="Entities\Wallpaper.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Mappings\BaseEntityMap.cs" />
     <Compile Include="Mappings\CategoryMap.cs" />
     <Compile Include="Mappings\TagMap.cs" />
@@ -76,6 +78,8 @@
       <DependentUpon>201610302259414_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="UnitOfWork.cs" />
     <Compile Include="WalltageDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
