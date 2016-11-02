@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,27 +39,36 @@ namespace Walltage.Domain
 
         public void Insert(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Add(entity);
         }
 
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Attach(entity);
+            _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            DbEntityEntry dbEntityEntry = _dbContext.Entry(entity);
+            if (dbEntityEntry.State != EntityState.Deleted)
+                dbEntityEntry.State = EntityState.Deleted;
+            else
+            {
+                _dbSet.Attach(entity);
+                _dbSet.Remove(entity);
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var entity = FindById(id);
+            Delete(entity);
         }
 
         public void BulkInsert(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            _dbSet.AddRange(entities);
         }
 
         public void BulkUpdate(IEnumerable<T> entities)
