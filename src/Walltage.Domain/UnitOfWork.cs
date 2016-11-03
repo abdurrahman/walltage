@@ -11,6 +11,16 @@ namespace Walltage.Domain
     {
         private readonly WalltageDbContext _dbContext;
 
+        //public UnitOfWork(WalltageDbContext context)
+        //{
+        //    _dbContext = context;
+        //}
+
+        //public UnitOfWork(string nameOrConnectionString)
+        //{
+        //    _dbContext = new WalltageDbContext(nameOrConnectionString);
+        //}
+
         public UnitOfWork(WalltageDbContext context)
         {
             Database.SetInitializer<WalltageDbContext>(null);
@@ -25,11 +35,14 @@ namespace Walltage.Domain
             return new Repository<T>(_dbContext);
         }
 
-        public int SaveChanges()
+        public void Save(bool async = false)
         {
             try
             {
-                return _dbContext.SaveChanges();
+                if (async)
+                    _dbContext.SaveChangesAsync();
+                else
+                    _dbContext.SaveChanges();
             }
             catch (Exception ex)
             {

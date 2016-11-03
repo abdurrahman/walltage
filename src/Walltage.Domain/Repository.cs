@@ -10,8 +10,12 @@ namespace Walltage.Domain
 {
     public class Repository<T> : IRepository<T> where T : class 
     {
-        protected DbContext _dbContext;
-        protected DbSet<T> _dbSet;
+        private readonly DbContext _dbContext;
+        private readonly DbSet<T> _dbSet;
+
+        //public Repository()
+        //{
+        //}
 
         public Repository(WalltageDbContext context)
         {
@@ -84,6 +88,12 @@ namespace Walltage.Domain
         public void BulkDelete(IEnumerable<object> ids)
         {
             throw new NotImplementedException();
+        }
+
+
+        public int Count(System.Linq.Expressions.Expression<Func<T, bool>> match)
+        {
+            return _dbSet.Count(match);
         }
     }
 }
