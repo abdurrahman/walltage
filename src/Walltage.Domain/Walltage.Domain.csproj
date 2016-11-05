@@ -65,6 +65,7 @@
     <Compile Include="Entities\UserAndLikeMapping.cs" />
     <Compile Include="Entities\UserRole.cs" />
     <Compile Include="Entities\Wallpaper.cs" />
+    <Compile Include="Entities\WallpaperAndTagMapping.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Mappings\BaseEntityMap.cs" />

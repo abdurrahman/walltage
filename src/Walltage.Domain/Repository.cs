@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Walltage.Domain.Entities;
 
 namespace Walltage.Domain
 {
@@ -41,13 +42,16 @@ namespace Walltage.Domain
             return _dbSet.Find(id);
         }
 
+
         public void Insert(T entity)
         {
+            SetBaseEntityForInsert(entity);
             _dbSet.Add(entity);
         }
 
         public void Update(T entity)
         {
+            SetBaseEntityForUpdate(entity);
             _dbSet.Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
         }
@@ -66,34 +70,79 @@ namespace Walltage.Domain
 
         public void Delete(int id)
         {
-            var entity = FindById(id);
+            var entity = _dbSet.Find(id);
             Delete(entity);
         }
 
         public void BulkInsert(IEnumerable<T> entities)
         {
+            SetBaseEntityForInsert(entities);
             _dbSet.AddRange(entities);
         }
 
         public void BulkUpdate(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            foreach (var entity in entities)
+            {
+                SetBaseEntityForUpdate(entity);
+                _dbSet.Attach(entity);
+                _dbContext.Entry(entity).State = EntityState.Modified;
+            }
         }
 
         public void BulkDelete(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            foreach (var entity in entities)
+            {
+                if (_dbContext.Entry(entity).State == EntityState.Detached)
+                    _dbSet.Attach(entity);
+                _dbSet.Remove(entity);
+            }
         }
 
         public void BulkDelete(IEnumerable<object> ids)
         {
-            throw new NotImplementedException();
+            foreach (var id in ids)
+            {
+                var entity = _dbSet.Find(id);
+                if (entity != null)
+                    Delete(entity);
+            }
         }
-
 
         public int Count(System.Linq.Expressions.Expression<Func<T, bool>> match)
         {
             return _dbSet.Count(match);
         }
+
+        #region Utilities
+
+        private void SetBaseEntityForInsert(T entity)
+        {
+            var baseEntity = entity as BaseEntity;
+            if (baseEntity == null) return;
+            baseEntity.AddedDate = DateTime.Now;
+            baseEntity.ModifiedDate = DateTime.Now;
+        }
+
+        private void SetBaseEntityForInsert(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+                SetBaseEntityForInsert(entity);
+        }
+
+        private void SetBaseEntityForUpdate(T entity)
+        {
+            var baseEntity = entity as BaseEntity;
+            if (baseEntity == null) return;
+            baseEntity.ModifiedDate = DateTime.Now;
+        }
+
+        private void SetBaseEntityForUpdate(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+                SetBaseEntityForUpdate(entity);
+        }
+        #endregion
     }
 }

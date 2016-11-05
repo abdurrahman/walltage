@@ -22,5 +22,7 @@ namespace Walltage.Domain
         void BulkDelete(IEnumerable<object> ids);
 
         int Count(Expression<Func<T, bool>> match);
+
+        //void Save(bool async = false);
     }
 }

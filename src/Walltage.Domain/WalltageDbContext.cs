@@ -27,6 +27,7 @@ namespace Walltage.Domain
         public virtual DbSet<UserAndLikeMapping> UserAndLikeMappings { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Wallpaper> Wallpapers { get; set; }
+        public virtual DbSet<WallpaperAndTagMapping> WallpaperAndTagMappings { get; set; }
 
         private void Configure()
         {
