@@ -20,7 +20,7 @@ namespace Walltage.Web.Tests
             _dbContext = new WalltageDbContext();
             _unitOfWork = new UnitOfWork(_dbContext);
             _userRepository = new Repository<User>(_dbContext);
-            _userRoleRepository = new Repository<UserRole>(_dbContext);
+            //_userRoleRepository = new Repository<UserRole>(_dbContext);
         }
 
         [TestCleanup]
@@ -31,37 +31,52 @@ namespace Walltage.Web.Tests
         }
 
         [TestMethod]
-        public void InsertUserRole()
+        public void InsertTest()
         {
-            var userRole = new UserRole
-            {
-                AddedDate = DateTime.Now,
-                Name = "Admin"
-            };
-            _userRoleRepository.Insert(userRole);
-            _unitOfWork.Save();
-        }
+        //    var userRole = new UserRole
+        //    {
+        //        AddedDate = DateTime.Now,
+        //        Name = "Admin"
+        //    };
+        //    _userRoleRepository.Insert(userRole);
 
-        [TestMethod]
-        public void InsertUser()
-        {
             var user = new User
             {
-                AddedDate = DateTime.Now,
                 Email = "datnetdeveloper@gmail.com",
                 FirstName = "Abdurrahman",
                 IPAddress = "192.168.2.1",
                 LastActivity = DateTime.Now,
                 LastName = "Işık",
-                ModifiedDate = DateTime.Now,
                 Password = "12345678",
                 Username = "xJason21",
-                UserRoleId = 3
+                UserRoleId = 1
             };
+            //_unitOfWork.UserRepository.Insert(user);
             _userRepository.Insert(user);
             _unitOfWork.Save();
 
             //Assert.AreNotEqual(-1);
+        }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var user = _userRepository.FindById(2);
+
+            user.Username = "Skip60Yataga";
+            user.UserRoleId = 2;
+
+            _userRepository.Update(user);
+            _unitOfWork.Save();
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var user = _userRepository.FindById(3);
+            _userRepository.Delete(user);
+
+            _unitOfWork.Save();
         }
     }
 }
