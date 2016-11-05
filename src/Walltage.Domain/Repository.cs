@@ -14,11 +14,11 @@ namespace Walltage.Domain
         private readonly DbContext _dbContext;
         private readonly DbSet<T> _dbSet;
 
-        //public Repository()
-        //{
-        //}
+        public Repository()
+        {
+        }
 
-        public Repository(WalltageDbContext context)
+        public Repository(DbContext context)
         {
             if (context == null)
                 throw new ArgumentNullException("dbContext can not be null");
@@ -71,6 +71,10 @@ namespace Walltage.Domain
         public void Delete(int id)
         {
             var entity = _dbSet.Find(id);
+            if (entity == null)
+            {
+                return;
+            }
             Delete(entity);
         }
 

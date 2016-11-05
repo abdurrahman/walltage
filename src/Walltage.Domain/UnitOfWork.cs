@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Walltage.Domain.Repositories;
 
 namespace Walltage.Domain
 {
@@ -13,13 +14,12 @@ namespace Walltage.Domain
 
         //public UnitOfWork(WalltageDbContext context)
         //{
-        //    _dbContext = context;
         //}
 
-        //public UnitOfWork(string nameOrConnectionString)
-        //{
-        //    _dbContext = new WalltageDbContext(nameOrConnectionString);
-        //}
+        public UnitOfWork(string nameOrConnectionString)
+        {
+            _dbContext = new WalltageDbContext(nameOrConnectionString);
+        }
 
         public UnitOfWork(WalltageDbContext context)
         {
@@ -28,6 +28,12 @@ namespace Walltage.Domain
                 throw new ArgumentNullException("dbContext can not be null");
 
             _dbContext = context;
+        }
+
+        private UserRepository _userRepository;
+        public UserRepository UserRepository
+        {
+            get { return _userRepository ?? (_userRepository = new UserRepository(_dbContext)); }
         }
 
         public IRepository<T> GetRepository<T>() where T : class
