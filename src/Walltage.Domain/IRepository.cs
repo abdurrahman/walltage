@@ -7,8 +7,7 @@ namespace Walltage.Domain
 {
     public interface IRepository<T> where T : class
     {
-        IQueryable<T> GetAll();
-        IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);
+        IQueryable<T> AsQueryable();
         T FindById(int id);
 
         void Insert(T entity);

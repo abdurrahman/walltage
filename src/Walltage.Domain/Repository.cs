@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Walltage.Domain.Entities;
 
 namespace Walltage.Domain
@@ -27,14 +25,9 @@ namespace Walltage.Domain
             _dbSet = _dbContext.Set<T>();
         }
 
-        public IQueryable<T> GetAll()
+        public virtual IQueryable<T> AsQueryable()
         {
-            return _dbSet;
-        }
-
-        public IQueryable<T> GetAll(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
-        {
-            return _dbSet.Where(predicate);
+            return _dbSet.AsQueryable();
         }
 
         public T FindById(int id)
