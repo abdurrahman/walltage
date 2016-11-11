@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
+using Walltage.Domain.Entities;
 
 namespace Walltage.Domain.Repositories
 {
-    public class TagRepository
+    public class TagRepository : Repository<Tag>
     {
+        public TagRepository(DbContext context)
+            : base(context)
+        {
+
+        }
     }
 }
