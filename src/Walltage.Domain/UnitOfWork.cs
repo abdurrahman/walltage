@@ -1,5 +1,5 @@
 ﻿using System;
-using Walltage.Domain.Repositories;
+using System.Data.Entity;
 
 namespace Walltage.Domain
 {
@@ -9,33 +9,11 @@ namespace Walltage.Domain
 
         public UnitOfWork(WalltageDbContext context)
         {
+            Database.SetInitializer<WalltageDbContext>(null);
+            if (context == null)
+                throw new ArgumentNullException("dbContext can not be null");
 
-        }
-
-        public UnitOfWork(string nameOrConnectionString)
-        {
-            _dbContext = new WalltageDbContext(nameOrConnectionString);
-        }
-
-        //public UnitOfWork(WalltageDbContext context)
-        //{
-        //    Database.SetInitializer<WalltageDbContext>(null);
-        //    if (context == null)
-        //        throw new ArgumentNullException("dbContext can not be null");
-
-        //    _dbContext = context;
-        //}
-
-        private UserRepository _userRepository;
-        public UserRepository UserRepository
-        {
-            get { return _userRepository ?? (_userRepository = new UserRepository(_dbContext)); }
-        }
-
-        private TagRepository _tagRepository;
-        public TagRepository TagRepository
-        {
-            get { return _tagRepository ?? (_tagRepository = new TagRepository(_dbContext)); }
+            _dbContext = context;
         }
 
         public IRepository<T> GetRepository<T>() where T : class

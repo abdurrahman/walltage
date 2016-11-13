@@ -7,7 +7,8 @@ namespace Walltage.Domain
 {
     public interface IRepository<T> where T : class
     {
-        IQueryable<T> AsQueryable();
+        IEnumerable<T> Get();
+        IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
         T FindById(int id);
 
         void Insert(T entity);
@@ -22,6 +23,6 @@ namespace Walltage.Domain
 
         int Count(Expression<Func<T, bool>> match);
 
-        //void Save(bool async = false);
+        void Save(bool async = false);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using Walltage.Domain.Repositories;
+//using Walltage.Domain.Repositories;
 
 namespace Walltage.Domain
 {
@@ -7,8 +7,8 @@ namespace Walltage.Domain
     {
         IRepository<T> GetRepository<T>() where T : class;
 
-        UserRepository UserRepository { get; }
-        TagRepository TagRepository { get; }
+        //UserRepository UserRepository { get; }
+        //TagRepository TagRepository { get; }
 
         void Save(bool async = false);
     }
