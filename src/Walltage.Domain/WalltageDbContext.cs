@@ -40,6 +40,7 @@ namespace Walltage.Domain
             //DbConfiguration.SetConfiguration(new MySql.Data.Entity.MySqlEFConfiguration());
         }
 
+        // You may get below error when you didnt use correct connection string in config file..
         // "The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe."
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

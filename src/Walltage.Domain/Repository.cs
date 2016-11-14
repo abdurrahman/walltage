@@ -9,8 +9,8 @@ namespace Walltage.Domain
 {
     public class Repository<T> : IRepository<T> where T : class 
     {
-        private readonly DbContext _dbContext;
-        private readonly DbSet<T> _dbSet;
+        protected DbContext _dbContext;
+        protected DbSet<T> _dbSet;
 
         public Repository(DbContext context)
         {
@@ -39,13 +39,13 @@ namespace Walltage.Domain
         
         public virtual void Insert(T entity)
         {
-            //SetBaseEntityForInsert(entity);
+            SetBaseEntityForInsert(entity);
             _dbSet.Add(entity);
         }
 
         public virtual void Update(T entity)
         {
-            //SetBaseEntityForUpdate(entity);
+            SetBaseEntityForUpdate(entity);
             _dbSet.Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
         }
@@ -72,7 +72,7 @@ namespace Walltage.Domain
 
         public virtual void BulkInsert(IEnumerable<T> entities)
         {
-            //SetBaseEntityForInsert(entities);
+            SetBaseEntityForInsert(entities);
             _dbSet.AddRange(entities);
         }
 
@@ -80,7 +80,7 @@ namespace Walltage.Domain
         {
             foreach (var entity in entities)
             {
-                //SetBaseEntityForUpdate(entity);
+                SetBaseEntityForUpdate(entity);
                 _dbSet.Attach(entity);
                 _dbContext.Entry(entity).State = EntityState.Modified;
             }
@@ -125,32 +125,32 @@ namespace Walltage.Domain
 
         #region Utilities
 
-        //private void SetBaseEntityForInsert(T entity)
-        //{
-        //    var baseEntity = entity as AuditableEntity;
-        //    if (baseEntity == null) return;
-        //    baseEntity.AddedDate = DateTime.Now;
-        //    baseEntity.ModifiedDate = DateTime.Now;
-        //}
+        private void SetBaseEntityForInsert(T entity)
+        {
+            var baseEntity = entity as AuditableEntity;
+            if (baseEntity == null) return;
+            baseEntity.AddedDate = DateTime.Now;
+            baseEntity.ModifiedDate = DateTime.Now;
+        }
 
-        //private void SetBaseEntityForInsert(IEnumerable<T> entities)
-        //{
-        //    foreach (var entity in entities)
-        //        SetBaseEntityForInsert(entity);
-        //}
+        private void SetBaseEntityForInsert(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+                SetBaseEntityForInsert(entity);
+        }
 
-        //private void SetBaseEntityForUpdate(T entity)
-        //{
-        //    var baseEntity = entity as AuditableEntity;
-        //    if (baseEntity == null) return;
-        //    baseEntity.ModifiedDate = DateTime.Now;
-        //}
+        private void SetBaseEntityForUpdate(T entity)
+        {
+            var baseEntity = entity as AuditableEntity;
+            if (baseEntity == null) return;
+            baseEntity.ModifiedDate = DateTime.Now;
+        }
 
-        //private void SetBaseEntityForUpdate(IEnumerable<T> entities)
-        //{
-        //    foreach (var entity in entities)
-        //        SetBaseEntityForUpdate(entity);
-        //}
+        private void SetBaseEntityForUpdate(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+                SetBaseEntityForUpdate(entity);
+        }
         #endregion
     }
 }

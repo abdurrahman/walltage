@@ -3,10 +3,10 @@ using Walltage.Domain.Entities;
 
 namespace Walltage.Domain.Repositories
 {
-    public class TagRepository : Repository<Tag>
+    public class UserRepository : Repository<User>
     {
-        public TagRepository(DbContext context)
-            : base(context)
+        public UserRepository(DbContext context)
+            : base (context)
         {
 
         }

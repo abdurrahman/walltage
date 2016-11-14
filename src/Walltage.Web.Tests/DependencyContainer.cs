@@ -2,6 +2,7 @@
 using log4net;
 using log4net.Config;
 using System;
+using System.Data.Entity;
 using Walltage.Domain;
 using Walltage.Service;
 
@@ -25,7 +26,7 @@ namespace Walltage.Web.Tests
             builder.RegisterInstance(_logger).As<ILog>().SingleInstance();
 
             // Register Dependencies
-            builder.RegisterType<WalltageDbContext>().InstancePerLifetimeScope();
+            builder.RegisterType<WalltageDbContext>().As(typeof(DbContext)).InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
             // Register Services

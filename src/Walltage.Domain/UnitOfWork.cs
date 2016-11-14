@@ -1,25 +1,38 @@
 ﻿using System;
 using System.Data.Entity;
+using Walltage.Domain.Repositories;
 
 namespace Walltage.Domain
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly WalltageDbContext _dbContext;
+        private DbContext _dbContext;
 
-        public UnitOfWork(WalltageDbContext context)
+        public UnitOfWork(DbContext context)
         {
-            Database.SetInitializer<WalltageDbContext>(null);
-            if (context == null)
-                throw new ArgumentNullException("dbContext can not be null");
-
             _dbContext = context;
         }
 
-        public IRepository<T> GetRepository<T>() where T : class
+        //private readonly WalltageDbContext _dbContext;
+
+        //public UnitOfWork(WalltageDbContext context)
+        //{
+        //    Database.SetInitializer<WalltageDbContext>(null);
+        //    if (context == null)
+        //        throw new ArgumentNullException("dbContext can not be null");
+
+        //    _dbContext = context;
+        //}
+        private UserRepository _userRepository;
+        public UserRepository UserRepository
         {
-            return new Repository<T>(_dbContext);
+            get { return _userRepository ?? (_userRepository = new UserRepository(_dbContext)); }
         }
+
+        //public IRepository<T> GetRepository<T>() where T : class
+        //{
+        //    return new Repository<T>(_dbContext);
+        //}
 
         public void Save(bool async = false)
         {
