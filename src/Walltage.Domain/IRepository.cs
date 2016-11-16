@@ -7,19 +7,17 @@ namespace Walltage.Domain
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> Get();
-        IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
+        IQueryable<T> Table();
         T FindById(int id);
 
         void Insert(T entity);
+        void Insert(IEnumerable<T> entities);
         void Update(T entity);
+        void Update(IEnumerable<T> entities);
         void Delete(T entity);
+        void Delete(IEnumerable<T> entities);
         void Delete(int id);
-
-        void BulkInsert(IEnumerable<T> entities);
-        void BulkUpdate(IEnumerable<T> entities);
-        void BulkDelete(IEnumerable<T> entities);
-        void BulkDelete(IEnumerable<object> ids);
+        void Delete(IEnumerable<object> ids);
 
         int Count(Expression<Func<T, bool>> match);
 

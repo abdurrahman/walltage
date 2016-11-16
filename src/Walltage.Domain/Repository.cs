@@ -21,15 +21,9 @@ namespace Walltage.Domain
             _dbSet = _dbContext.Set<T>();
         }
 
-        public virtual IEnumerable<T> Get()
+        public virtual IQueryable<T> Table()
         {
-            return _dbSet.AsEnumerable();
-        }
-
-        public virtual IEnumerable<T> Get(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
-        {
-            IEnumerable<T> query = _dbSet.Where(predicate).AsEnumerable();
-            return query;
+            return _dbSet.AsQueryable();
         }
 
         public virtual T FindById(int id)
@@ -70,13 +64,13 @@ namespace Walltage.Domain
             Delete(entityToDelete);
         }
 
-        public virtual void BulkInsert(IEnumerable<T> entities)
+        public virtual void Insert(IEnumerable<T> entities)
         {
             SetBaseEntityForInsert(entities);
             _dbSet.AddRange(entities);
         }
 
-        public virtual void BulkUpdate(IEnumerable<T> entities)
+        public virtual void Update(IEnumerable<T> entities)
         {
             foreach (var entity in entities)
             {
@@ -86,7 +80,7 @@ namespace Walltage.Domain
             }
         }
 
-        public virtual void BulkDelete(IEnumerable<T> entities)
+        public virtual void Delete(IEnumerable<T> entities)
         {
             foreach (var entity in entities)
             {
@@ -96,7 +90,7 @@ namespace Walltage.Domain
             }
         }
 
-        public virtual void BulkDelete(IEnumerable<object> ids)
+        public virtual void Delete(IEnumerable<object> ids)
         {
             foreach (var id in ids)
             {
