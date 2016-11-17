@@ -21,6 +21,7 @@ namespace Walltage.Domain
         }
 
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Resolution> Resolutions { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAndFavoriteMapping> UserAndFavoriteMapping { get; set; }
@@ -46,6 +47,7 @@ namespace Walltage.Domain
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Configurations.Add(new CategoryMap());
+            modelBuilder.Configurations.Add(new ResolutionMap());
             modelBuilder.Configurations.Add(new TagMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new UserRoleMap());

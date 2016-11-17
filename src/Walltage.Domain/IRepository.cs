@@ -11,13 +11,13 @@ namespace Walltage.Domain
         T FindById(int id);
 
         void Insert(T entity);
-        void Insert(IEnumerable<T> entities);
+        void BulkInsert(IEnumerable<T> entities);
         void Update(T entity);
-        void Update(IEnumerable<T> entities);
+        void BulkUpdate(IEnumerable<T> entities);
         void Delete(T entity);
-        void Delete(IEnumerable<T> entities);
         void Delete(int id);
-        void Delete(IEnumerable<object> ids);
+        void BulkDelete(IEnumerable<T> entities);
+        void BulkDelete(IEnumerable<object> ids);
 
         int Count(Expression<Func<T, bool>> match);
 

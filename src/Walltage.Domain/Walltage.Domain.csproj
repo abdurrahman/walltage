@@ -60,6 +60,7 @@
     <Compile Include="Entities\AuditableEntity.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Resolution.cs" />
     <Compile Include="Entities\Tag.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserAndFavoriteMapping.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Mappings\BaseEntityMap.cs" />
     <Compile Include="Mappings\CategoryMap.cs" />
+    <Compile Include="Mappings\ResolutionMap.cs" />
     <Compile Include="Mappings\TagMap.cs" />
     <Compile Include="Mappings\UserMap.cs" />
     <Compile Include="Mappings\UserRoleMap.cs" />

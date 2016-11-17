@@ -64,13 +64,13 @@ namespace Walltage.Domain
             Delete(entityToDelete);
         }
 
-        public virtual void Insert(IEnumerable<T> entities)
+        public virtual void BulkInsert(IEnumerable<T> entities)
         {
             SetBaseEntityForInsert(entities);
             _dbSet.AddRange(entities);
         }
 
-        public virtual void Update(IEnumerable<T> entities)
+        public virtual void BulkUpdate(IEnumerable<T> entities)
         {
             foreach (var entity in entities)
             {
@@ -80,7 +80,7 @@ namespace Walltage.Domain
             }
         }
 
-        public virtual void Delete(IEnumerable<T> entities)
+        public virtual void BulkDelete(IEnumerable<T> entities)
         {
             foreach (var entity in entities)
             {
@@ -90,7 +90,7 @@ namespace Walltage.Domain
             }
         }
 
-        public virtual void Delete(IEnumerable<object> ids)
+        public virtual void BulkDelete(IEnumerable<object> ids)
         {
             foreach (var id in ids)
             {
