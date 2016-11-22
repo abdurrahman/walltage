@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Walltage.Service.Wrappers
+﻿namespace Walltage.Service.Wrappers
 {
     public interface ISessionWrapper
     {
+        int UserId { get; set; }
+        string UserName { get; set; }
+        string UserEmail { get; set; }
+
+        void StartSession(int userId, string userName, string userEmail);
+        void EndSession();
     }
 }
