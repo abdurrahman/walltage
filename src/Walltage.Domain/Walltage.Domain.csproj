@@ -83,7 +83,6 @@
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="WalltageDbContext.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>

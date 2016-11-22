@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Walltage.Domain;
 using Walltage.Domain.Entities;
 using Walltage.Service.Models;
+using Walltage.Service.Helpers;
 
 namespace Walltage.Service
 {
@@ -13,24 +15,27 @@ namespace Walltage.Service
     {
         private readonly WalltageDbContext _dbContext;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRepository<User> _userRepository;
+        private readonly ILog _logger;
+        private readonly IWebHelper _webHelper;
 
-        public AccountService()
+        public AccountService(IUnitOfWork unitOfWork,
+            ILog logger,
+            IWebHelper webHelper)
         {
-            _dbContext = new WalltageDbContext();
-            _unitOfWork = new UnitOfWork(_dbContext);
+            _unitOfWork = unitOfWork;
+            _logger = logger;
+            _webHelper = webHelper;
         }
 
         public LoginViewModel Login(LoginViewModel model)
         {
-            // ToDo: [abdurrahman] Password need to be hash (md5)
+            var encryptedPassword = _webHelper.EncryptToMd5(model.Password);
             // ToDo: [abdurrahman] Add what you need here for session or cookie after login
-            var query = _userRepository.AsQueryable()
-                .Where(x => x.Username == model.Username && x.Password == model.Password)
+            var query = _unitOfWork.UserRepository.Table()
+                .Where(x => x.Username == model.Username && x.Password == encryptedPassword)
                 .Select(user => new LoginViewModel
                 {
-                    Username = user.Username,
-                    Fullname = string.Format("{0} {1}", user.FirstName, user.LastName)
+                    Username = user.Username
                 });
 
             return query.FirstOrDefault();
@@ -41,18 +46,23 @@ namespace Walltage.Service
             // ToDo: [abdurrahman] Add a IP checker helper
             // ToDo: [abdurrahman] Dont register before unmatch email or username
             // ToDo: [abdurrahman] Is userroleId unique
-            _userRepository.Insert(new User
+            var isUserAlreadyRegistered = _unitOfWork.UserRepository.Table().Any(x => x.Email == model.Email);
+            if (isUserAlreadyRegistered)
+                return false;
+
+            var encryptedPassword = _webHelper.EncryptToMd5(model.Password);
+            var currentIpAddress = _webHelper.GetCurrentIpAddress();
+
+            _unitOfWork.UserRepository.Insert(new User
                 {
-                    FirstName = model.Firstname,
-                    LastName = model.Lastname,
                     Email = model.Email,
-                    IPAddress = "",
+                    IPAddress = currentIpAddress,
                     LastActivity = DateTime.Now,
-                    Password = model.Password,
+                    Password = encryptedPassword,
                     Username = model.Username,
                     UserRoleId = 1
                 });
-
+            _unitOfWork.Save();
             return true;
         }
     }
