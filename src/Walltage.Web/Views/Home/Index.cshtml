@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "Amazing Wallpapers // Walltage.com";
+    ViewBag.Description = "A online wallpaper database on the net";
+    ViewBag.Keyword = "wallpaper, abstract, nature, wide screen, city, vs.";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="banner-section">
+    <div class="jumbotron">
+        <h1>Hi there !</h1>
+        <p>This web site maybe could makes beautify your desktop screen.</p>
+        @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+        {
+            <form ng-controller="SearchController">
+                <div class="input-group col-md-6 col-md-offset-3">
+                    <input type="search" name="q" class="form-control input-lg" placeholder="Find your screen..." />
+                    <span class="input-group-btn">
+                        <button class="btn btn-lg" type="submit"><i class="fa fa-search"></i> Search</button>
+                    </span>
+                </div>
+            </form>
+        }
+    </div>
+</section>
+
+<section class="category-section">
+    <div class="container">
+        <div class="row">
+            @*<p>{{message}}</p>
+            <div class="col-md-3">
+                <ul>
+                    <li ng-repeat="c in categories"><a href="~/home/category/{{c.CategoryId}}" title="{{c.Name}}">{{c.Name}}</a></li>
+                </ul>
+            </div>*@
+            <div class="col-md-3">
+                <ul>
+                    <li><a href="">ABSTRACT</a></li>
+                    <li><a href="">ANIMALS</a></li>
+                    <li><a href="">ARCHITECTURE</a></li>
+                    <li><a href="">BUSINESS</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul>
+                    <li><a href="">CELEBRATIONS</a></li>
+                    <li><a href="">CITY</a></li>
+                    <li><a href="">ELECTRONICS</a></li>
+                    <li><a href="">LANDSCAPSE</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul>
+                    <li><a href="">MUSIC</a></li>
+                    <li><a href="">MOVIE</a></li>
+                    <li><a href="">SPORT</a></li>
+                    <li><a href="">SCI-FI</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul>
+                    <li><a href="">NATURE</a></li>
+                    <li><a href="">PEOPLE</a></li>
+                    <li><a href="">SCIENCE</a></li>
+                    <li><a href="">TRAVEL</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="feed-section" ng-controller="WallpaperController">
+    <div class="container">
+        <div class="grid">
+            @*<figure class="effect-apollo" ng-repeat="wall in wallpapers">
+                <img class="lazy" src="~/wallpapers/thumbs/{{wall.ImgPath}}" alt="{{wall.Name}}" />
+                <figcaption>
+                    <h2 style="display:none">Strong <span>Apollo</span></h2>
+                    <p>{{wall.Name}}</p>
+                    <a href="~/home/wallpaper/{{wall.WallpaperId}}">view more...</a>
+                </figcaption>
+            </figure>*@
+
+            <figure class="effect-apollo">
+                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-237110.jpg" alt="" />
+                <figcaption>
+                    <h2>Strong <span>Apollo</span></h2>
+                    <p>Apollo's last game of pool was so strange.</p>
+                    <a href="">view more...</a>
+                </figcaption>
+            </figure>
+
+            <figure class="effect-apollo">
+                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-227057.jpg" alt="" />
+                <figcaption>
+                    <h2>Strong <span>Apollo</span></h2>
+                    <p>Apollo's last game of pool was so strange.</p>
+                    <a href="">view more...</a>
+                </figcaption>
+            </figure>
+            <figure class="effect-apollo">
+                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-227372.jpg" alt="" />
+                <figcaption>
+                    <h2>Strong <span>Apollo</span></h2>
+                    <p>Apollo's last game of pool was so strange.</p>
+                    <a href="">view more...</a>
+                </figcaption>
+            </figure>
+            <figure class="effect-apollo">
+                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-114220.jpg" alt="" />
+                <figcaption>
+                    <h2>Strong <span>Apollo</span></h2>
+                    <p>Apollo's last game of pool was so strange.</p>
+                    <a href="">view more...</a>
+                </figcaption>
+            </figure>
+            <figure class="effect-apollo">
+                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-204738.jpg" alt="" />
+                <figcaption>
+                    <h2>Strong <span>Apollo</span></h2>
+                    <p>Apollo's last game of pool was so strange.</p>
+                    <a href="">view more...</a>
+                </figcaption>
+            </figure>
+
+            <figure class="effect-apollo">
+                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-224998.jpg" alt="" />
+                <figcaption>
+                    <h2>Strong <span>Apollo</span></h2>
+                    <p>Apollo's last game of pool was so strange.</p>
+                    <a href="">view more...</a>
+                </figcaption>
+            </figure>
+            <figure class="effect-apollo">
+                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-56240.jpg" alt="" />
+                <figcaption>
+                    <h2>Strong <span>Apollo</span></h2>
+                    <p>Apollo's last game of pool was so strange.</p>
+                    <a href="">view more...</a>
+                </figcaption>
+            </figure>
+            <figure class="effect-apollo">
+                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-164335.jpg" alt="" />
+                <figcaption>
+                    <h2>Strong <span>Apollo</span></h2>
+                    <p>Apollo's last game of pool was so strange.</p>
+                    <a href="">view more...</a>
+                </figcaption>
+            </figure>
+            <figure class="effect-apollo">
+                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-117987.jpg" alt="" />
+                <figcaption>
+                    <h2>Strong <span>Apollo</span></h2>
+                    <p>Apollo's last game of pool was so strange.</p>
+                    <a href="">view more...</a>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</section>
