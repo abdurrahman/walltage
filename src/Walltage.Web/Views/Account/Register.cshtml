@@ -1,4 +1,5 @@
-﻿@model Walltage.Service.Models.RegisterViewModel
+﻿@using Walltage.Web.Infrastructures
+@model Walltage.Service.Models.RegisterViewModel
 @{
     ViewBag.Title = "SignUp";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -36,6 +37,12 @@
                     @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })
                     <div class="col-md-8">
                         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("??", new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                         @Html.Raw(Html.GenerateCaptcha())
                     </div>
                 </div>
                 <div class="form-group">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Walltage.Service.Models;
+using Walltage.Web.Infrastructures;
 
 namespace Walltage.Web.Controllers
 {
@@ -21,7 +22,7 @@ namespace Walltage.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
             }
             return View();
         }
@@ -33,8 +34,9 @@ namespace Walltage.Web.Controllers
         }
 
         [HttpPost]
+        [CaptchaValidator]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model, bool captchaValid)
         {
             if (ModelState.IsValid)
             {
