@@ -12,10 +12,6 @@ namespace Walltage.Service.Models
         public string Password { get; set; }
 
         public bool RememberMe { get; set; }
-
-        //public DateTime LastLogin { get; set; }
-
-        public string Fullname { get; set; }
     }
 
     public class RegisterViewModel
@@ -40,5 +36,13 @@ namespace Walltage.Service.Models
 
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class ForgotPasswordViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
     }
 }

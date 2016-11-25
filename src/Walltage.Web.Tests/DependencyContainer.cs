@@ -5,6 +5,7 @@ using System;
 using System.Data.Entity;
 using Walltage.Domain;
 using Walltage.Service;
+using Walltage.Service.Helpers;
 
 namespace Walltage.Web.Tests
 {
@@ -33,6 +34,7 @@ namespace Walltage.Web.Tests
             builder.RegisterType<AccountService>().As<IAccountService>().InstancePerLifetimeScope();
             builder.RegisterType<HomeService>().As<IHomeService>().InstancePerLifetimeScope();
             builder.RegisterType<SettingService>().As<ISettingService>().InstancePerLifetimeScope();
+            builder.RegisterType<WebHelper>().As<IWebHelper>().InstancePerLifetimeScope();
 
             _container = builder.Build();
 
