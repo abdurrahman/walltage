@@ -13,7 +13,7 @@ namespace Walltage.Service
 {
     public class AccountService : IAccountService
     {
-        private readonly WalltageDbContext _dbContext;
+        //private readonly WalltageDbContext _dbContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILog _logger;
         private readonly IWebHelper _webHelper;

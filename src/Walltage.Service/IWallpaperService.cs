@@ -3,7 +3,7 @@ using Walltage.Domain.Entities;
 
 namespace Walltage.Service
 {
-    public interface IHomeService
+    public interface IWallpaperService
     {
         List<Wallpaper> GetSearchResult(string q);
 
@@ -13,5 +13,8 @@ namespace Walltage.Service
 
         List<Wallpaper> TopImagesThisWeek(int count);
 
+        List<Category> GetCategoryList();
+
+        List<Resolution> GetResolutionList();
     }
 }

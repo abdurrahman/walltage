@@ -8,6 +8,6 @@ namespace Walltage.Service
 {
     public interface ISettingService
     {
-
+        
     }
 }

@@ -65,13 +65,12 @@
     <Compile Include="AccountService.cs" />
     <Compile Include="Helpers\IWebHelper.cs" />
     <Compile Include="Helpers\WebHelper.cs" />
-    <Compile Include="HomeService.cs" />
+    <Compile Include="WallpaperService.cs" />
     <Compile Include="IAccountService.cs" />
-    <Compile Include="IHomeService.cs" />
-    <Compile Include="ISettingService.cs" />
+    <Compile Include="IWallpaperService.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\WallpaperViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingService.cs" />
     <Compile Include="Wrappers\CookieWrapper.cs">
       <SubType>Code</SubType>
     </Compile>
