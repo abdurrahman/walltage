@@ -11,11 +11,12 @@ namespace Walltage.Domain
         T FindById(int id);
 
         void Insert(T entity);
-        void BulkInsert(IEnumerable<T> entities);
         void Update(T entity);
-        void BulkUpdate(IEnumerable<T> entities);
         void Delete(T entity);
         void Delete(int id);
+
+        void BulkInsert(IEnumerable<T> entities);
+        void BulkUpdate(IEnumerable<T> entities);
         void BulkDelete(IEnumerable<T> entities);
         void BulkDelete(IEnumerable<object> ids);
 

@@ -8,7 +8,9 @@ namespace Walltage.Domain
         //IRepository<T> GetRepository<T>() where T : class;
 
         UserRepository UserRepository { get; }
-        //TagRepository TagRepository { get; }
+        TagRepository TagRepository { get; }
+        CategoryRepository CategoryRepository { get; }
+        ResolutionRepository ResolutionRepository { get; }
 
         void Save(bool async = false);
     }

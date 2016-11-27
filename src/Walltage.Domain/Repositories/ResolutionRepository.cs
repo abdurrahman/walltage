@@ -3,9 +3,9 @@ using Walltage.Domain.Entities;
 
 namespace Walltage.Domain.Repositories
 {
-    public class UserRepository : Repository<User>
+    public class ResolutionRepository : Repository<Resolution>
     {
-        public UserRepository(DbContext context)
+        public ResolutionRepository(DbContext context)
             : base (context)
         {
         }
