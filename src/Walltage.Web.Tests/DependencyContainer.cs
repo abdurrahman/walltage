@@ -27,13 +27,13 @@ namespace Walltage.Web.Tests
             builder.RegisterInstance(_logger).As<ILog>().SingleInstance();
 
             // Register Dependencies
-            builder.RegisterType<WalltageDbContext>().As(typeof(DbContext)).InstancePerLifetimeScope();
+            builder.RegisterType<WalltageDbContext>().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
             // Register Services
             builder.RegisterType<AccountService>().As<IAccountService>().InstancePerLifetimeScope();
-            builder.RegisterType<HomeService>().As<IHomeService>().InstancePerLifetimeScope();
-            builder.RegisterType<SettingService>().As<ISettingService>().InstancePerLifetimeScope();
+            builder.RegisterType<WallpaperService>().As<IWallpaperService>().InstancePerLifetimeScope();
+            //builder.RegisterType<SettingService>().As<ISettingService>().InstancePerLifetimeScope();
             builder.RegisterType<WebHelper>().As<IWebHelper>().InstancePerLifetimeScope();
 
             _container = builder.Build();

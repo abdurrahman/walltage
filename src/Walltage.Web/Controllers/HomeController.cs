@@ -1,14 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using log4net;
 using System.Web.Mvc;
+using Walltage.Service;
+using Walltage.Service.Models;
 
 namespace Walltage.Web.Controllers
 {
     public class HomeController : Controller
     {
         // ToDo : Check AntiValidate attribute
+
+        private readonly ILog _logger;
+        private readonly IWallpaperService _wallpaperService;
+
+        public HomeController(ILog logger,
+            IWallpaperService wallpaperService)
+        {
+            _logger = logger;
+            _wallpaperService = wallpaperService;
+        }
 
         public ActionResult Index()
         {
@@ -64,7 +73,21 @@ namespace Walltage.Web.Controllers
 
         public ActionResult Wallpaper(int id)
         {
+
             return View();
+        }
+
+        public ActionResult Upload()
+        {
+            var categories = _wallpaperService.GetCategoryList();
+            var resolutions = _wallpaperService.GetResolutionList();
+
+            var model = new WallpaperViewModel
+            {
+                CategoryList = categories,
+                ResolutionList = resolutions
+            };
+            return View(model);  
         }
     }
 }

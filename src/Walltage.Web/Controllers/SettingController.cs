@@ -8,7 +8,6 @@ namespace Walltage.Web.Controllers
 {
     public class SettingController : Controller
     {
-        // GET: Wallpaper
         public ActionResult Index()
         {
             return View();

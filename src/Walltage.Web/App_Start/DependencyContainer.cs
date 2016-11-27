@@ -3,9 +3,12 @@ using Autofac.Integration.Mvc;
 using log4net;
 using log4net.Config;
 using System;
+using System.Data.Entity;
+using System.Reflection;
 using System.Web.Mvc;
 using Walltage.Domain;
 using Walltage.Service;
+using Walltage.Service.Helpers;
 
 namespace Walltage.Web
 {
@@ -29,14 +32,27 @@ namespace Walltage.Web
             // Register Dependencies
             builder.RegisterType<WalltageDbContext>().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            //builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            // Register Wrappers
+            builder.RegisterAssemblyTypes(Assembly.Load("Walltage.Service"))
+                .Where(t => t.Name.EndsWith("Wrapper"))
+                .AsImplementedInterfaces()
+                .InstancePerRequest();
 
             // Register Services
             builder.RegisterType<AccountService>().As<IAccountService>().InstancePerLifetimeScope();
-            builder.RegisterType<HomeService>().As<IHomeService>().InstancePerLifetimeScope();
-            builder.RegisterType<SettingService>().As<ISettingService>().InstancePerLifetimeScope();
+            builder.RegisterType<WallpaperService>().As<IWallpaperService>().InstancePerLifetimeScope();
+            builder.RegisterType<WebHelper>().As<IWebHelper>().InstancePerLifetimeScope();
+
+            builder.RegisterModule(new AutofacWebTypesModule());
+
+            //builder.RegisterAssemblyTypes(Assembly.Load("Walltage.Service"))
+            //    .Where(t => t.Name.EndsWith("Service"))
+            //    .AsImplementedInterfaces()
+            //    .InstancePerRequest();
 
             // Register Controllers
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
 
             // Register Action Filters
             builder.RegisterFilterProvider();
