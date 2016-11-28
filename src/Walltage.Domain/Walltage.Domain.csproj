@@ -81,6 +81,7 @@
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\ResolutionRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\WallpaperRepository.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
     <Compile Include="UnitOfWork.cs" />

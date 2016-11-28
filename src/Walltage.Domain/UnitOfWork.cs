@@ -47,6 +47,12 @@ namespace Walltage.Domain
             get { return _tagRepository ?? (_tagRepository = new TagRepository(_dbContext)); }
         }
 
+        private WallpaperRepository _wallpaperRepository;
+        public WallpaperRepository WallpaperRepository
+        {
+            get { return _wallpaperRepository ?? (_wallpaperRepository = new WallpaperRepository(_dbContext)); }
+        }
+
         //public IRepository<T> GetRepository<T>() where T : class
         //{
         //    return new Repository<T>(_dbContext);

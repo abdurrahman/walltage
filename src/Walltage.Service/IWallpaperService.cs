@@ -16,5 +16,7 @@ namespace Walltage.Service
         List<Category> GetCategoryList();
 
         List<Resolution> GetResolutionList();
+
+        void WallpaperInsert(Wallpaper entity);
     }
 }

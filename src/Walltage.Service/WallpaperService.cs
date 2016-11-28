@@ -55,5 +55,12 @@ namespace Walltage.Service
             var resolutionList = query.ToList();
             return resolutionList;
         }
+
+
+        public void WallpaperInsert(Wallpaper entity)
+        {
+            _unitOfWork.WallpaperRepository.Insert(entity);
+            _unitOfWork.Save();
+        }
     }
 }
