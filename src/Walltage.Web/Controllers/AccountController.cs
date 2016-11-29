@@ -28,18 +28,40 @@ namespace Walltage.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            return View();
+            var model = new LoginViewModel();
+            if (!string.IsNullOrEmpty(_cookieWrapper.RememberMe))
+                model.Username = _cookieWrapper.RememberMe;
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
+                model.Username = model.Username.Trim();
+                var user = _accountService.ValidateAccount(model.Username, model.Password);
+                if (user == null)
+                    ModelState.AddModelError("", "Username or password is wrong, try again !");
 
+                if (model.RememberMe)
+                    _cookieWrapper.RememberMe = model.Username;
+
+                _sessionWrapper.StartSession(user.Id, user.Username, user.Email);
+
+                if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
+                    return RedirectToAction("Index", "Home");
+
+                return Redirect(returnUrl);
             }
-            return View();
+            return View(model);
+        }
+
+        public ActionResult Logout()
+        {
+            _sessionWrapper.EndSession();
+            return RedirectToAction("Index", "Home");
         }
 
         [AllowAnonymous]
@@ -57,7 +79,7 @@ namespace Walltage.Web.Controllers
             {
 
             }
-            return View();
+            return View(model);
         }
 
         public ActionResult ForgotPassword()

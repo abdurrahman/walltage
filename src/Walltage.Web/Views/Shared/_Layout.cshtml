@@ -44,11 +44,7 @@
                         <li><a href="~/home/random"><i class="fa fa-random"></i> Random</a></li>
                         <li><a href="~/home/upload"><i class="fa fa-comments"></i> Upload</a></li>
                     </ul>
-                    @*@Html.Partial("_LoginPartial")*@
-                    <div class="navbar-form navbar-right">
-                        <a href="~/account/register" type="submit" class="btn btn-success">Register</a>
-                        <a href="~/account/login" type="submit" class="btn btn-warning">Login</a>
-                    </div>
+                    @Html.Action("HeaderLinks", "Common")
                 </div>
             </div>
         </nav>

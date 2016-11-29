@@ -13,7 +13,6 @@ namespace Walltage.Service
 {
     public class AccountService : IAccountService
     {
-        //private readonly WalltageDbContext _dbContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILog _logger;
         private readonly IWebHelper _webHelper;
@@ -27,18 +26,18 @@ namespace Walltage.Service
             _webHelper = webHelper;
         }
 
-        public LoginViewModel Login(LoginViewModel model)
+        public User ValidateAccount(string email, string password)
         {
-            var encryptedPassword = _webHelper.EncryptToMd5(model.Password);
-            // ToDo: [abdurrahman] Add what you need here for session or cookie after login
-            var query = _unitOfWork.UserRepository.Table()
-                .Where(x => x.Username == model.Username && x.Password == encryptedPassword)
-                .Select(user => new LoginViewModel
-                {
-                    Username = user.Username
-                });
+            var encryptedPassword = _webHelper.EncryptToMd5(password);
+            var user = _unitOfWork.UserRepository.Table()
+                .FirstOrDefault(x => x.Username == email && x.Password == encryptedPassword);
 
-            return query.FirstOrDefault();
+            if (user != null)
+            {
+                user.LastActivity = DateTime.Now;
+                _unitOfWork.UserRepository.Update(user);
+            }
+            return user;
         }
 
         public bool Register(RegisterViewModel model)

@@ -1,10 +1,11 @@
-﻿using Walltage.Service.Models;
+﻿using Walltage.Domain.Entities;
+using Walltage.Service.Models;
 
 namespace Walltage.Service
 {
     public interface IAccountService
     {
-        LoginViewModel Login(LoginViewModel model);
+        User ValidateAccount(string email, string password);
 
         bool Register(RegisterViewModel model);
     }
