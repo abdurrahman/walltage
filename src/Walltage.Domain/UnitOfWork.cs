@@ -53,6 +53,11 @@ namespace Walltage.Domain
             get { return _wallpaperRepository ?? (_wallpaperRepository = new WallpaperRepository(_dbContext)); }
         }
 
+        private UserRoleRepository _userRoleRepository;
+        public UserRoleRepository UserRoleRepository
+        {
+            get { return _userRoleRepository ?? (_userRoleRepository = new UserRoleRepository(_dbContext)); }
+        }
         //public IRepository<T> GetRepository<T>() where T : class
         //{
         //    return new Repository<T>(_dbContext);

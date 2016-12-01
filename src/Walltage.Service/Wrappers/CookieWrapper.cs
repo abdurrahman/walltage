@@ -16,13 +16,13 @@ namespace Walltage.Service.Wrappers
 
         public string RememberMe
         {
-            get
-            {
-                return GetCookie(RememberMeCookieKey);
-            }
+            get{ return GetCookie(RememberMeCookieKey);}
             set
             {
-                SetCookie(RememberMeCookieKey, value, DateTime.Now.AddDays(10));
+                if (string.IsNullOrWhiteSpace(value))
+                    RemoveCookie(RememberMeCookieKey);
+                else
+                    SetCookie(RememberMeCookieKey, value, DateTime.Now.AddDays(10));
             }
         }
 
@@ -45,7 +45,7 @@ namespace Walltage.Service.Wrappers
 
         private void SetCookie(string name, string value, DateTime? expires = null)
         {
-            var cookie = new HttpCookie(name);
+            var cookie = new HttpCookie(name, value);
             if (expires.HasValue)
                 cookie.Expires = expires.Value;
             _context.Response.Cookies.Add(cookie);

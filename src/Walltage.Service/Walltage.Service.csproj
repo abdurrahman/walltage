@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DatabaseOperationResult.cs" />
+    <Compile Include="Models\SystemUserRoleNames.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Helpers\IWebHelper.cs" />
     <Compile Include="Helpers\WebHelper.cs" />

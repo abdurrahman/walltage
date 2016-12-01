@@ -5,8 +5,8 @@ namespace Walltage.Domain.Repositories
 {
     public class TagRepository : Repository<Tag>
     {
-        public TagRepository(DbContext context) 
-            : base (context)
+        public TagRepository(DbContext context)
+            : base(context)
         {
         }
     }

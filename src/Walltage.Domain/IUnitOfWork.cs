@@ -12,6 +12,7 @@ namespace Walltage.Domain
         CategoryRepository CategoryRepository { get; }
         ResolutionRepository ResolutionRepository { get; }
         WallpaperRepository WallpaperRepository { get; }
+        UserRoleRepository UserRoleRepository { get; }
 
         void Save(bool async = false);
     }

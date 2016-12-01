@@ -34,7 +34,7 @@ namespace Walltage.Service.Services
         /// <returns>User</returns>
         User ValidateUser(string username, string password);
 
-        DatabaseOperationResult RegisterUser(User entity);
+        DatabaseOperationResult RegisterUser(RegisterViewModel model);
 
         void ChangePassword(string password);
 

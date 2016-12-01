@@ -3,9 +3,9 @@ using Walltage.Domain.Entities;
 
 namespace Walltage.Domain.Repositories
 {
-    public class WallpaperRepository : Repository<Wallpaper>
+    public class UserRoleRepository : Repository<UserRole>
     {
-        public WallpaperRepository(DbContext context)
+        public UserRoleRepository(DbContext context)
             : base(context)
         {
         }

@@ -78,10 +78,21 @@ namespace Walltage.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model, bool captchaValid)
         {
+            if (!captchaValid)
+            {
+                ModelState.AddModelError("", "Wrong captcha !");
+            }
+
             if (ModelState.IsValid)
             {
-
-
+                var result = _userService.RegisterUser(model);
+                if (result.Success)
+                {
+                    ViewBag.Message = "Your account created successfuly.";
+                    return View();
+                }
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("", error);
             }
             return View(model);
         }

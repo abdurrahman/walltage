@@ -69,35 +69,40 @@ namespace Walltage.Service.Services
         }
 
 
-        public DatabaseOperationResult RegisterUser(User entity)
+        public DatabaseOperationResult RegisterUser(RegisterViewModel model)
         {
-            // ToDo: [abdurrahman] Add a IP checker helper
-            // ToDo: [abdurrahman] Is userroleId unique
-
             var result = new DatabaseOperationResult();
-            entity.Email = entity.Email.Trim();
-            if (this.FindUserByEmail(entity.Email) != null)
+            model.Email = model.Email.Trim();
+            if (this.FindUserByEmail(model.Email) != null)
             {
                 result.AddError("The email has already been taken.");
                 return result;
             }
-            if (this.FindUserByUsername(entity.Username) != null)
+            if (this.FindUserByUsername(model.Username) != null)
             {
                 result.AddError("The username has already been taken.");
                 return result;
             }
 
-            var encryptedPassword = _webHelper.EncryptToMd5(entity.Password);
+            var encryptedPassword = _webHelper.EncryptToMd5(model.Password);
             var currentIpAddress = _webHelper.GetCurrentIpAddress();
+
+            var getUserRole = _unitOfWork.UserRoleRepository.Table()
+                .FirstOrDefault(x => x.Name == SystemUserRoleNames.User);
+            if (getUserRole == null)
+            {
+                result.AddError("User acceptance is currently off, please contact to administrator.");
+                return result;
+            }
 
             _unitOfWork.UserRepository.Insert(new User
             {
-                Email = entity.Email.Trim(),
+                Email = model.Email.Trim(),
                 IPAddress = currentIpAddress,
-                LastActivity =System.DateTime.Now,
+                LastActivity = System.DateTime.Now,
                 Password = encryptedPassword,
-                Username = entity.Username,
-                UserRoleId = 1
+                Username = model.Username,
+                UserRoleId = getUserRole.Id
             });
             _unitOfWork.Save();
             return result;
