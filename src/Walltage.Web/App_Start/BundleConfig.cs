@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace Walltage.Web
 {
@@ -15,15 +14,6 @@ namespace Walltage.Web
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                 "~/assets/js/jquery.validate*"));
-
-            string angularCdnPath = "//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js";
-
-            bundles.Add(new ScriptBundle("~/bundles/angular", angularCdnPath).Include(
-                "~/assets/js/angular.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/angularlib").Include(
-                "~/assets/js/ui-bootstrap-tpls.js",
-                "~/assets/js/angular-sanitize.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/dropzonejs").Include(
                 "~/assets/js/dropzone.js"));

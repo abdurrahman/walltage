@@ -2,10 +2,9 @@
 using log4net;
 using log4net.Config;
 using System;
-using System.Data.Entity;
 using Walltage.Domain;
-using Walltage.Service;
 using Walltage.Service.Helpers;
+using Walltage.Service.Services;
 
 namespace Walltage.Web.Tests
 {
@@ -31,9 +30,8 @@ namespace Walltage.Web.Tests
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
             // Register Services
-            builder.RegisterType<AccountService>().As<IAccountService>().InstancePerLifetimeScope();
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
             builder.RegisterType<WallpaperService>().As<IWallpaperService>().InstancePerLifetimeScope();
-            //builder.RegisterType<SettingService>().As<ISettingService>().InstancePerLifetimeScope();
             builder.RegisterType<WebHelper>().As<IWebHelper>().InstancePerLifetimeScope();
 
             _container = builder.Build();

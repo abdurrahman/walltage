@@ -3,12 +3,11 @@ using Autofac.Integration.Mvc;
 using log4net;
 using log4net.Config;
 using System;
-using System.Data.Entity;
 using System.Reflection;
 using System.Web.Mvc;
 using Walltage.Domain;
-using Walltage.Service;
 using Walltage.Service.Helpers;
+using Walltage.Service.Services;
 
 namespace Walltage.Web
 {
@@ -40,7 +39,7 @@ namespace Walltage.Web
                 .InstancePerRequest();
 
             // Register Services
-            builder.RegisterType<AccountService>().As<IAccountService>().InstancePerLifetimeScope();
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
             builder.RegisterType<WallpaperService>().As<IWallpaperService>().InstancePerLifetimeScope();
             builder.RegisterType<WebHelper>().As<IWebHelper>().InstancePerLifetimeScope();
 

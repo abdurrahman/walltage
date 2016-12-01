@@ -62,12 +62,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountService.cs" />
+    <Compile Include="Models\DatabaseOperationResult.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Helpers\IWebHelper.cs" />
     <Compile Include="Helpers\WebHelper.cs" />
-    <Compile Include="WallpaperService.cs" />
-    <Compile Include="IAccountService.cs" />
-    <Compile Include="IWallpaperService.cs" />
+    <Compile Include="Services\WallpaperService.cs" />
+    <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\IWallpaperService.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\WallpaperViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Walltage.Domain;
 using Walltage.Domain.Entities;
 
-namespace Walltage.Service
+namespace Walltage.Service.Services
 {
     public class WallpaperService : IWallpaperService
     {

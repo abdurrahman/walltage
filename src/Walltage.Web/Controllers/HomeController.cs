@@ -3,6 +3,7 @@ using System;
 using System.Web.Mvc;
 using Walltage.Service;
 using Walltage.Service.Models;
+using Walltage.Service.Services;
 
 namespace Walltage.Web.Controllers
 {

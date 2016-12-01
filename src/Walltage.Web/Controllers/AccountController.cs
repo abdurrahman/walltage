@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Walltage.Service;
 using Walltage.Service.Models;
+using Walltage.Service.Services;
 using Walltage.Service.Wrappers;
 using Walltage.Web.Infrastructures;
 
@@ -9,18 +10,18 @@ namespace Walltage.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccountService _accountService;
+        private readonly IUserService _userService;
         private readonly ISessionWrapper _sessionWrapper;
         private readonly ICookieWrapper _cookieWrapper;
         private readonly ILog _logger;
 
         public AccountController(ILog logger,
-            IAccountService accountService,
+            IUserService userService,
             ISessionWrapper sessionWrapper,
             ICookieWrapper cookieWrapper)
         {
             _logger = logger;
-            _accountService = accountService;
+            _userService = userService;
             _cookieWrapper = cookieWrapper;
             _sessionWrapper = sessionWrapper;
         }
@@ -41,10 +42,12 @@ namespace Walltage.Web.Controllers
             if (ModelState.IsValid)
             {
                 model.Username = model.Username.Trim();
-                var user = _accountService.ValidateAccount(model.Username, model.Password);
+                var user = _userService.ValidateUser(model.Username, model.Password);
                 if (user == null)
+                {
                     ModelState.AddModelError("", "Username or password is wrong, try again !");
-
+                    return View(model);
+                }
                 if (model.RememberMe)
                     _cookieWrapper.RememberMe = model.Username;
 
@@ -77,6 +80,7 @@ namespace Walltage.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+
 
             }
             return View(model);

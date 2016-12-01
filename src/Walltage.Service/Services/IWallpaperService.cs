@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Walltage.Domain.Entities;
 
-namespace Walltage.Service
+namespace Walltage.Service.Services
 {
     public interface IWallpaperService
     {
