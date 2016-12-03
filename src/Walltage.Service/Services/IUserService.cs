@@ -36,7 +36,7 @@ namespace Walltage.Service.Services
 
         DatabaseOperationResult RegisterUser(RegisterViewModel model);
 
-        void ChangePassword(string password);
+        DatabaseOperationResult ChangePassword(ChangePasswordViewModel model);
 
         void ForgotPassword(string email);
     }

@@ -148,7 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructures\AuthorizationFilter.cs" />
+    <Compile Include="Infrastructures\UserAuthorizeAttribute.cs" />
     <Compile Include="Infrastructures\CaptchaValidatorAttribute.cs" />
     <Compile Include="Infrastructures\HtmlExtensions.cs" />
     <Compile Include="Models\Common\HeaderLinksModel.cs" />
@@ -173,6 +173,7 @@
     <Content Include="Views\Common\HeaderLinks.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Home\Upload.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

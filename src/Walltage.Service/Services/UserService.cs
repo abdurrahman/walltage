@@ -4,6 +4,7 @@ using Walltage.Domain;
 using Walltage.Domain.Entities;
 using Walltage.Service.Helpers;
 using Walltage.Service.Models;
+using Walltage.Service.Wrappers;
 
 namespace Walltage.Service.Services
 {
@@ -12,14 +13,17 @@ namespace Walltage.Service.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILog _logger;
         private readonly IWebHelper _webHelper;
+        private readonly ISessionWrapper _sessionWrapper;
 
         public UserService(IUnitOfWork unitOfWork,
             ILog logger,
-            IWebHelper webHelper)
+            IWebHelper webHelper,
+            ISessionWrapper sessionWrapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _webHelper = webHelper;
+            _sessionWrapper = sessionWrapper;
         }
 
         public virtual User FindUserById(int userId)
@@ -108,9 +112,33 @@ namespace Walltage.Service.Services
             return result;
         }
 
-        public void ChangePassword(string password)
+        public DatabaseOperationResult ChangePassword(ChangePasswordViewModel model)
         {
-            throw new System.NotImplementedException();
+            var result = new DatabaseOperationResult();
+            if (string.IsNullOrWhiteSpace(model.NewPassword))
+            {
+                result.AddError("Password is not provided");
+                return result;
+            }
+
+            var user = _unitOfWork.UserRepository.FindById(_sessionWrapper.UserId);
+            if (user == null)
+            {
+                result.AddError("User not found");
+                return result;
+            }
+
+            string oldPassword = _webHelper.EncryptToMd5(model.OldPassword);
+            bool oldPasswordIsValid = oldPassword == user.Password;
+            if (!oldPasswordIsValid)
+                result.AddError("Old password doesn't match.");
+
+            if (oldPasswordIsValid)
+            {
+                user.Password = _webHelper.EncryptToMd5(model.NewPassword);
+                _unitOfWork.UserRepository.Update(user);
+            }
+            return result;
         }
 
         public void ForgotPassword(string email)

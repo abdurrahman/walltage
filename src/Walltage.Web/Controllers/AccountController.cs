@@ -79,9 +79,7 @@ namespace Walltage.Web.Controllers
         public ActionResult Register(RegisterViewModel model, bool captchaValid)
         {
             if (!captchaValid)
-            {
                 ModelState.AddModelError("", "Wrong captcha !");
-            }
 
             if (ModelState.IsValid)
             {
@@ -100,6 +98,30 @@ namespace Walltage.Web.Controllers
         public ActionResult ForgotPassword()
         {
             return View();
+        }
+
+        [UserAuthorize]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _userService.ChangePassword(model);
+                if (result.Success)
+                {
+                    ViewBag.Message = "Your password changed successfuly.";
+                    return View();
+                }
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("", error);
+            }
+            return View(model);
         }
     }
 }
