@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Walltage.Domain.Entities;
+using Walltage.Service.Models;
 
 namespace Walltage.Service.Services
 {
@@ -17,6 +18,6 @@ namespace Walltage.Service.Services
 
         List<Resolution> GetResolutionList();
 
-        void WallpaperInsert(Wallpaper entity);
+        DatabaseOperationResult WallpaperInsert(WallpaperViewModel model);
     }
 }

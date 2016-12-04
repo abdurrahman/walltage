@@ -68,6 +68,7 @@ namespace Walltage.Service.Services
             {
                 user.LastActivity = System.DateTime.Now;
                 _unitOfWork.UserRepository.Update(user);
+                _unitOfWork.Save();
             }
             return user;
         }
@@ -137,6 +138,7 @@ namespace Walltage.Service.Services
             {
                 user.Password = _webHelper.EncryptToMd5(model.NewPassword);
                 _unitOfWork.UserRepository.Update(user);
+                _unitOfWork.Save();
             }
             return result;
         }
