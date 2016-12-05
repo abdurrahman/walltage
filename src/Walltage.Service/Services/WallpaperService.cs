@@ -88,33 +88,26 @@ namespace Walltage.Service.Services
             var allowedExtensions = new List<string> { ".jpg", ".jpeg", ".tiff" };
             if (!string.IsNullOrWhiteSpace(fileExtension))
                 fileExtension = fileExtension.ToLowerInvariant();
-            // Todo: Check else situation
+            else
+            {
+                result.AddError("The file extension not provided. Please try again");
+                return result;
+            }
+
             if (!allowedExtensions.Contains(fileExtension))
             {
                 result.AddError("The file extension not supported, allowed extension is \"*.jpg\", \"*.jpeg\", \"*.tiff\"");
                 return result;
             }
-            
+
             if (!System.IO.Directory.Exists(System.Web.Hosting.HostingEnvironment.MapPath("/App_Data/Uploads")))
                 System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("/App_Data/Uploads"));
-            
-            model.ImgPath = string.Format("walltage-{0}{1}", model.file.FileName, System.IO.Path.GetExtension(model.file.FileName));
+
+            var fileName = System.IO.Path.GetFileNameWithoutExtension(model.file.FileName);
+            model.ImgPath = string.Format("{0}{1}", fileName, fileExtension);
             string path = System.IO.Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/Uploads"), model.ImgPath);
 
-            
-            //var tagList = new List<Tag>(5);
-            //if (!string.IsNullOrEmpty(model.Tags))
-            //{
-            //    foreach (var tag in model.Tags.Split(','))
-            //    {
-            //        tagList.Add(new Tag {
-            //         AddedBy = _sessionWrapper.UserName,
-            //         Name = tag,
-                     
-            //        })
-            //    }
-		 
-            //}
+            var tagList = PrepareTagList(model.Tags);
 
             _unitOfWork.WallpaperRepository.Insert(new Domain.Entities.Wallpaper
             {
@@ -126,9 +119,50 @@ namespace Walltage.Service.Services
                 ResolutionId = model.ResolutionId,
                 Size = model.file.ContentLength,
                 UploaderId = _sessionWrapper.UserId,
+                TagList = tagList
             });
-            _unitOfWork.Save();
+            _unitOfWork.Save(true);
+
+            if (!System.IO.File.Exists(path))
+            {
+                model.file.SaveAs(path);
+            }
+
             return result;
+        }
+
+        private List<WallpaperAndTagMapping> PrepareTagList(string tags)
+        {
+            if (string.IsNullOrEmpty(tags)) return null;
+
+            var tagList = new List<WallpaperAndTagMapping>(5);
+            foreach (var tag in tags.Split(','))
+            {
+                var tagName = tag.Trim();
+                if (string.IsNullOrWhiteSpace(tagName))
+                    continue;
+
+                var isTagExist = _unitOfWork.TagRepository.Table()
+                    .FirstOrDefault(x => x.Name == tag);
+
+                if (isTagExist == null)
+                {
+                    _unitOfWork.TagRepository.Insert(new Tag
+                    {
+                        AddedBy = _sessionWrapper.UserName,
+                        Name = tagName,
+                        AddedDate = DateTime.Now,
+                        UserId = _sessionWrapper.UserId,
+                    });
+                    _unitOfWork.Save();
+
+                    var lastTag = _unitOfWork.TagRepository.Table().OrderByDescending(x => x.Id).FirstOrDefault();
+                    tagList.Add(new WallpaperAndTagMapping { TagId = lastTag.Id });
+                    continue;
+                }
+                tagList.Add(new WallpaperAndTagMapping { TagId = isTagExist.Id });
+            }
+            return tagList;
         }
     }
 }
