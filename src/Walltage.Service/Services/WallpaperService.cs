@@ -28,22 +28,44 @@ namespace Walltage.Service.Services
 
         public List<Wallpaper> GetSearchResult(string q)
         {
-            throw new NotImplementedException();
+            var query = from c in _unitOfWork.WallpaperRepository.Table()
+                        orderby c.Id
+                        where c.Name.Contains(q)
+                        select c;
+            var searchResult = query.ToList();
+            return searchResult;
         }
 
         public List<Domain.Entities.Wallpaper> GetLastUploads(int count)
         {
-            throw new NotImplementedException();
+            var query = _unitOfWork.WallpaperRepository.Table()
+                .OrderByDescending(x => x.AddedDate)
+                .Take(count);
+
+            var lastUploads = query.ToList();
+            return lastUploads;
         }
 
         public List<Domain.Entities.Wallpaper> GetHomePageUploads(int count)
         {
-            throw new NotImplementedException();
+            var query = _unitOfWork.WallpaperRepository.Table()
+                .OrderByDescending(x => x.ViewCount)
+                //.Where(x => x.AddedDate >= DateTime.Now.AddMonths(-2))
+                .Take(count);
+
+            var homePageUploads = query.ToList();
+            return homePageUploads;
         }
 
         public List<Domain.Entities.Wallpaper> TopImagesThisWeek(int count)
         {
-            throw new NotImplementedException();
+            var query = _unitOfWork.WallpaperRepository.Table()
+                .OrderByDescending(x => x.ViewCount)
+                .Where(x => x.AddedDate.Date >= DateTime.Now.AddDays(-7).Date)
+                .Take(count);
+
+            var topImagesThisWeek = query.ToList();
+            return topImagesThisWeek;
         }
 
 
@@ -103,12 +125,14 @@ namespace Walltage.Service.Services
             if (!System.IO.Directory.Exists(System.Web.Hosting.HostingEnvironment.MapPath("/App_Data/Uploads")))
                 System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("/App_Data/Uploads"));
 
-            var fileName = System.IO.Path.GetFileNameWithoutExtension(model.file.FileName);
+            var lastWallpaper = _unitOfWork.WallpaperRepository.Table().OrderByDescending(x => x.Id).FirstOrDefault();
+            string fileName = lastWallpaper == null ? "walltage-1" : "walltage-" + (lastWallpaper.Id + 1);
             model.ImgPath = string.Format("{0}{1}", fileName, fileExtension);
-            string path = System.IO.Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/Uploads"), model.ImgPath);
+            string filePath = System.IO.Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/Uploads"), model.ImgPath);
 
             var tagList = PrepareTagList(model.Tags);
 
+            model.Name = System.IO.Path.GetFileNameWithoutExtension(model.file.FileName);
             _unitOfWork.WallpaperRepository.Insert(new Domain.Entities.Wallpaper
             {
                 AddedBy = _sessionWrapper.UserName,
@@ -123,9 +147,9 @@ namespace Walltage.Service.Services
             });
             _unitOfWork.Save(true);
 
-            if (!System.IO.File.Exists(path))
+            if (!System.IO.File.Exists(filePath))
             {
-                model.file.SaveAs(path);
+                model.file.SaveAs(filePath);
             }
 
             return result;

@@ -70,17 +70,17 @@
 
 </section>
 
-<section class="feed-section" ng-controller="WallpaperController">
+<section class="feed-section">
     <div class="container">
-        <div class="grid">
-            @*<figure class="effect-apollo" ng-repeat="wall in wallpapers">
-                <img class="lazy" src="~/wallpapers/thumbs/{{wall.ImgPath}}" alt="{{wall.Name}}" />
+        <div class="grid" data-bind="visible: Wallpapers().length > 0">
+            <figure class="effect-apollo" data-bind="foreach: Wallpapers">
+                <img class="lazy" data-bind="attr: { src: Path, alt: Name }" />
                 <figcaption>
                     <h2 style="display:none">Strong <span>Apollo</span></h2>
-                    <p>{{wall.Name}}</p>
-                    <a href="~/home/wallpaper/{{wall.WallpaperId}}">view more...</a>
+                    <p data-bind="text: Name"></p>
+                    <a data-bind="attr: { src: Path, title: Name }" >view more...</a>
                 </figcaption>
-            </figure>*@
+            </figure>
 
             <figure class="effect-apollo">
                 <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-237110.jpg" alt="" />
@@ -159,3 +159,37 @@
         </div>
     </div>
 </section>
+@section Scripts {
+    <script>
+        function WallpaperViewModel() {
+            debugger;
+            var self = this;
+            self.Id = ko.observable("");
+            self.Name = ko.observable("");
+            self.Path = ko.observable("~/wallpapers/thumbs/");
+
+            var Wallpaper = {
+                Id: self.Id,
+                Name: self.Name,
+                Path: self.Path
+            };
+
+            self.Wallpaper = ko.observable();
+            self.Wallpapers = ko.observableArray();
+
+            $.ajax({
+                url: '@Url.Action("GetHomePageWallpapers", "Home")',
+                cache: false,
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                data: {},
+                success: function (data) {
+                    self.Wallpapers(data);
+                }
+            });
+        }
+
+        var viewModel = new WallpaperViewModel();
+        ko.applyBindings(viewModel);
+    </script>
+}

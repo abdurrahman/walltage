@@ -1,0 +1,441 @@
+﻿/********************************************
+Project : A wallpaper database - walltage.com
+Author  : Abdurrahman ISIK
+Date	: 05 Jul 2015 00:29
+********************************************/
+@import '_mixin.scss';
+
+$font-stack: 'Dosis', sans-serif;
+$primary-color: #e44c65;
+$secondary-color: #272833;
+$third-color: #0ce3ac;
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+} 
+
+.unselectable {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background-color:#33343e;
+	font: 100% $font-stack;
+}
+
+#wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin-bottom: -245px;
+}
+
+.navbar {
+	margin-bottom:0;
+	@include border-radius(0);
+}
+
+
+
+.banner-section {
+	display:table;
+	margin:0 auto;
+	width:100%;
+	text-align:center;
+	/*-- Full Height --*/
+	height: 80vh; 
+	color:	rgba(255,255,255,0.9);
+	background: url(../assets/images/search-bg.jpg) no-repeat;
+	background-position: center center;
+	background-size: cover;
+	/*-- Create an Overlay --*/
+	&:after {
+		content: '';
+		position:absolute;
+		left:0;
+		width:100%;
+		height:80%;
+		background-color: rgba(118, 144, 164, 0.4);
+		z-index:0;
+	}
+	.jumbotron { 
+		display: table-cell;
+		vertical-align: middle;
+		position:relative;
+		z-index: 4;
+		padding:0 5%;
+		background:transparent;
+		text-align: center;
+		@media screen and (max-width:766px) {
+			h1 { font-size: 48px;}
+		}
+		.input-group .input-lg {
+			@include border-radius(0);
+			background: rgba(255,255,255,0.4);
+			box-shadow:none;
+			color:#fff;
+			font-size: 28px;
+			@include placeholder{color: #fff}
+			&:focus {
+				background: rgba(255,255,255,0.6);
+			}
+		}
+		.input-group span.input-group-btn button   {
+			@include border-radius(0);
+			background-color: transparent;
+			border:3px solid $primary-color;
+			cursor: pointer;
+			&:hover {
+				@include transition(background-color .3s ease-out);
+				background-color: $primary-color;
+			}
+		}		
+	}
+}
+
+.category-section {
+	background: $secondary-color;
+	padding: 50px 0;
+	ul {
+		list-style: none;
+		text-align: center;
+		li {
+			display: block;
+			margin: 5px 0;
+			padding:0;
+			a {
+				display: inline-block;
+				margin:0;
+				padding:5px;
+				letter-spacing: 8px;				
+				text-decoration:none;
+				&:hover {
+					@include transition(all .3s ease-in);
+					background-color: $primary-color;
+					color: #FFF;
+					letter-spacing: 4px;				
+					padding:5px 10px 5px 13px;
+				}
+			}
+		}
+	}
+}
+
+.pointer-events {
+	pointer-events: none;
+}
+
+.figcaption-setting {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.margin {
+	margin: 0;
+}
+
+.feed-section {
+	background: #F3F3F3;
+	padding: 100px 0;
+	position: relative;
+	@media screen and (min-width:1367px) {
+		.container { width: 1800px;}
+	}
+	h1 {
+		margin-left: 1vw;
+		font-size: 2.5vw;
+		font-weight: 300;
+	}
+	.grid {
+		position: relative;
+		clear: both;
+		margin:0 auto;
+		padding:1em 0 4em;
+		list-style: none;
+		text-align: center;
+		figure {
+			position: relative;
+			float: left;
+			overflow: hidden;
+			margin: 10px 1%;
+			min-width:256.5px;
+			max-width:256.5px;
+			max-height: 210px;
+			width: 23%;
+			height: auto;
+			text-align: center;
+			cursor: pointer;
+			img {
+				position: relative;
+				display: block;
+				min-height: 100%;
+				max-height: 100%;
+				opacity: 0.8;
+			}
+			figcaption {
+				padding: 2em;
+				color: #fff;
+				text-transform: uppercase;
+				font-size: 1.25em;
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+				@extend .figcaption-setting ;
+				&::before {
+					@extend .pointer-events;
+				}
+				&::after {
+					@extend .pointer-events;
+				}
+				a {
+					@extend .figcaption-setting;
+					z-index: 1000;
+					text-indent: 200%;
+					white-space: nowrap;
+					font-size: 0;
+					opacity: 0;
+				}
+			}
+			h2 {
+				word-spacing: -0.15em;
+				font-weight: 300;
+				span {
+					font-weight: 800;
+				}
+				@extend .margin;
+			}
+			p {
+				@extend .margin;
+				letter-spacing: 1px;
+				font-size: 68.5%; 
+			}
+		}
+		figure.effect-apollo {
+				background:  #3498db;
+				img {
+					opacity: 0.95;
+					-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+					transition: opacity 0.35s, transform 0.35s;
+					-webkit-transform: scale3d(1.05,1.05,1);
+					transform: scale3d(1.05,1.05,1);
+				}
+				figcaption {
+					&::before {
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						background: rgba(255,255,255,0.5);
+						content: '';
+						-webkit-transition: -webkit-transform 0.6s;
+						transition: transform 0.6s;
+						-webkit-transform: scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,-100%,0);
+						transform: scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,-100%,0);
+					}
+				}
+				p {
+					position: absolute;
+					right: 0;
+					bottom: 0;
+					margin: 3em;
+					padding: 0 1em;
+					max-width: 150px;
+					border-right: 4px solid #FFF;
+					text-align: right;
+					opacity: 0;
+					-webkit-transition: opacity 0.35s;
+					transition: opacity 0.35s;
+				}
+				h2 {
+					text-align: left;
+				}
+				&:hover img {
+					opacity: 0.6;
+					-webkit-transform: scale3d(1,1,1);
+					transform: scale3d(1,1,1);
+				}
+				&:hover figcaption {
+					&::before {
+						-webkit-transform: scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,100%,0);
+						transform: scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,100%,0);
+					}
+				}
+				&:hover p {
+					opacity: 1;
+					-webkit-transition-delay: 0.1s;
+					transition-delay: 0.1s;
+				}
+			}
+	}
+}
+
+.footer-ghost {
+	height: 245px;
+}
+
+footer {
+	display:block;
+	background:$secondary-color;
+	margin:0;
+	padding:5em 0;
+	text-align:center;
+	ul {
+		cursor:default;
+		list-style:none;
+		padding-left:0;
+		font-size:1.8em;
+		li {
+			display: inline-block;
+			padding: 0 0.5em;
+			a {
+				text-decoration:none;
+				transition: color 0.4s ease-out;
+				&:hover { 
+					text-decoration:none;
+					color: $primary-color;
+				}
+				span.label { display:none;}
+			}
+		}
+	}
+	.copyright {
+		color: rgba(255, 255, 255, 0.5);
+		font-size: 1em;
+		line-height: 1em;
+		margin: 2em 0 0 0;
+		padding: 0;
+		text-align: center;
+		li:first-child {
+			border-left: 0;
+			margin-left: 0;
+			padding-left: 0;
+		}
+		li {
+			border-left: solid 1px rgba(255, 255, 255, 0.3);
+			display: inline-block;
+			list-style: none;
+			margin-left: 1.5em;
+			padding-left: 1.5em;
+			@media screen and (max-width:766px) {
+				border-left: none;
+				display: block;
+				margin: 15px auto 0;
+				padding: 0;
+			}
+			i {
+				font-size: 0.8em;
+				color: $primary-color;
+			}
+		}
+	}
+}
+
+.account-section {
+	padding:10% 0;
+	background-image: url(../assets/images/search-bg2.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	form {
+		background: rgba(0,0,0,0.9) ;
+		padding:15px;
+		.validation-summary-errors {
+			margin:10px 0px 20px;
+			text-align: justify;
+			font-style: italic;
+			ul {
+				list-style: none;
+			}
+		}
+	}
+}
+
+.upload-section {
+	@extend .account-section;
+	.file-upload-btn {
+		position: relative;
+		overflow: hidden;
+		margin: 10px;
+		.upload-btn {
+			position: absolute;
+			top: 0;
+			right: 0;
+			margin: 0;
+			padding: 0;
+			font-size: 20px;
+			cursor: pointer;
+			opacity: 0;
+			filter:  alpha(opacity=0);
+		}
+	}
+}
+
+.detail-section {
+	background: #111;
+	padding: 3%;
+	overflow: auto;
+	cursor: default;
+	.showcase {
+		overflow: hidden;
+		text-align: center;		
+		.wallpaper {
+			width: 100%;
+			display: block;
+		}
+	}
+	.sidebar {
+		float: right;
+		margin-left: 1.5em;
+		h2 {
+			font-size: 2vw;
+			color: $third-color;
+		}
+		hr {
+			margin-top: 10px;
+			margin-bottom: 15px;
+		}
+		.properties {
+			.table {
+				border-spacing: 2px;
+				th {
+					font-weight: bold;
+				}
+			}
+		}
+		.tags {
+			ul {
+				list-style: none;
+				li {
+					position: relative;
+					display: inline-block;
+					margin: 0 4px 4px 0;		
+					a {
+						padding: .2em .5em;
+						line-height: 2em;
+						text-decoration: none;
+						text-align: center;
+						background: rgba(0,0,0,0.9);
+						&:hover {
+							@include transition(background-color .350s ease-out);
+							background: $primary-color;
+							color: #FFF;
+						}
+					}		
+				}
+			}
+		}
+	}
+}

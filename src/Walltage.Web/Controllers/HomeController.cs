@@ -28,15 +28,29 @@ namespace Walltage.Web.Controllers
             return View();
         }
 
-        public ActionResult Search()
+        public JsonResult GetHomePageWallpapers()
         {
-            return View();
+            var result = _wallpaperService.GetHomePageUploads(20);
+            if (result == null)
+            {
+                ModelState.AddModelError("", "Doesnt find any wallpaper for display to homepage !");
+                _logger.Warn("Doesnt find any wallpaper for display to homepage !");
+                return Json(null);
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult Search(object s)
+        public ActionResult Search(string q)
         {
-            return View(s);
+            var result = _wallpaperService.GetSearchResult(q);
+            if (result == null)
+            {
+                ModelState.AddModelError("", "Not found, try again!");
+                return View();
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ViewResult Faq()
@@ -95,9 +109,9 @@ namespace Walltage.Web.Controllers
             return View(model);  
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Upload")]
         [ValidateAntiForgeryToken]
-        public ActionResult Upload(WallpaperViewModel model)
+        public ActionResult UploadWallpaper(WallpaperViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +119,7 @@ namespace Walltage.Web.Controllers
                 if (result.Success)
                 {
                     ViewBag.Message = "Wallpaper uploaded successfuly !";
-                    return View();
+                    return RedirectToAction("Upload");
                 }
             }
             return View(model);

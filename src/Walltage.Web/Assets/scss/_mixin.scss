@@ -1,0 +1,50 @@
+﻿
+
+
+@mixin background-animation($keyframe) {
+	-webkit-animation: $keyframe 10s linear infinite;
+	   -moz-animation: $keyframe 10s linear infinite;
+			animation: $keyframe 10s linear infinite; 
+}
+
+@mixin animation-delay($delay) {
+	-webkit-animation-delay: $delay; /* Chrome, Safari, Opera */
+	   -moz-animation-delay: $delay;
+			animation-delay: $delay;
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content; 
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  } 
+}
+
+@mixin border-radius($radius){
+	-webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+         -ms-border-radius: $radius;
+                border-radius: $radius;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}  
+}
+
+@mixin transition($transition...) {
+	-webkit-transition: $transition;
+	   -moz-transition: $transition;
+		    -o-transition: $transition;
+				transition: $transition;
+}

@@ -129,6 +129,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\images\search-bg.jpg" />
+    <Content Include="Assets\images\search-bg2.jpg" />
+    <Content Include="Assets\images\search-bg3.jpg" />
+    <Content Include="Assets\js\bootstrap.js" />
+    <Content Include="Assets\js\jquery.lazyload.js" />
+    <Content Include="Assets\js\jquery.min.js" />
+    <Content Include="Assets\js\jquery.scrollstop.js" />
+    <Content Include="Assets\js\jquery.validate.js" />
+    <Content Include="Assets\js\jquery.validate.unobtrusive.js" />
+    <Content Include="Assets\js\knockout-3.4.1.js" />
+    <Content Include="Assets\js\modernizr-2.6.2.js" />
+    <Content Include="Assets\js\respond.js" />
+    <Content Include="Assets\js\walltage.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -174,6 +187,14 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\fonts\FontAwesome.otf" />
+    <Content Include="Assets\scss\style.scss" />
+    <Content Include="Assets\scss\_mixin.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -184,8 +205,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\css\" />
-    <Folder Include="Assets\img\" />
-    <Folder Include="Assets\js\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
