@@ -71,18 +71,18 @@
 </section>
 
 <section class="feed-section">
-    <div class="container">
-        <div class="grid" data-bind="visible: Wallpapers().length > 0">
-            <figure class="effect-apollo" data-bind="foreach: Wallpapers">
-                <img class="lazy" data-bind="attr: { src: Path, alt: Name }" />
+    <div class="container" data-bind="visible: Wallpapers().length > 0">
+        <div class="grid" data-bind="foreach: Wallpapers">
+            <figure class="effect-apollo">
+                <img class="lazy" data-bind="attr: { src: '../Uploads/Thumbs/' + ImgPath, alt: Name }" />
                 <figcaption>
                     <h2 style="display:none">Strong <span>Apollo</span></h2>
                     <p data-bind="text: Name"></p>
-                    <a data-bind="attr: { src: Path, title: Name }" >view more...</a>
+                    <a data-bind="attr: { href: 'Wallpaper/' + Id, title: Name }">view more...</a>
                 </figcaption>
             </figure>
 
-            <figure class="effect-apollo">
+            @*<figure class="effect-apollo">
                 <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-237110.jpg" alt="" />
                 <figcaption>
                     <h2>Strong <span>Apollo</span></h2>
@@ -155,7 +155,7 @@
                     <p>Apollo's last game of pool was so strange.</p>
                     <a href="">view more...</a>
                 </figcaption>
-            </figure>
+            </figure>*@
         </div>
     </div>
 </section>
@@ -166,12 +166,12 @@
             var self = this;
             self.Id = ko.observable("");
             self.Name = ko.observable("");
-            self.Path = ko.observable("~/wallpapers/thumbs/");
+            self.ImgPath = ko.observable("");
 
             var Wallpaper = {
                 Id: self.Id,
                 Name: self.Name,
-                Path: self.Path
+                ImgPath: self.ImgPath
             };
 
             self.Wallpaper = ko.observable();
@@ -184,12 +184,14 @@
                 contentType: 'application/json; charset=utf-8',
                 data: {},
                 success: function (data) {
+                    console.log(data);
                     self.Wallpapers(data);
                 }
             });
         }
 
         var viewModel = new WallpaperViewModel();
+        console.log(viewModel);
         ko.applyBindings(viewModel);
     </script>
 }

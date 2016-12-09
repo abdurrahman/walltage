@@ -1,4 +1,5 @@
-﻿
+﻿using System.Drawing;
+
 namespace Walltage.Service.Helpers
 {
     public interface IWebHelper
@@ -15,5 +16,7 @@ namespace Walltage.Service.Helpers
         /// <param name="text"></param>
         /// <returns>Encrypted hash String</returns>
         string EncryptToMd5(string text);
+
+        Image CreateThumbnail(Image image, Size thumbnailSize, bool needToFill);
     }
 }

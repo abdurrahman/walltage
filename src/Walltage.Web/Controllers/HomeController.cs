@@ -41,7 +41,7 @@ namespace Walltage.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult Search(string q)
         {
             var result = _wallpaperService.GetSearchResult(q);
@@ -121,7 +121,17 @@ namespace Walltage.Web.Controllers
                     ViewBag.Message = "Wallpaper uploaded successfuly !";
                     return RedirectToAction("Upload");
                 }
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("", error);
             }
+            var categories = _wallpaperService.GetCategoryList();
+            var resolutions = _wallpaperService.GetResolutionList();
+
+            model = new WallpaperViewModel
+            {
+                CategoryList = categories,
+                ResolutionList = resolutions
+            };
             return View(model);
         }
     }

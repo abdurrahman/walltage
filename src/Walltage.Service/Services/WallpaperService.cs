@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Walltage.Domain;
 using Walltage.Domain.Entities;
+using Walltage.Service.Helpers;
 using Walltage.Service.Models;
 using Walltage.Service.Wrappers;
 
@@ -16,14 +17,17 @@ namespace Walltage.Service.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILog _logger;
         private readonly ISessionWrapper _sessionWrapper;
+        private readonly IWebHelper _webHelper;
 
         public WallpaperService(ILog logger,
             IUnitOfWork unitOfWork,
-            ISessionWrapper sessionWrapper)
+            ISessionWrapper sessionWrapper,
+            IWebHelper webHelper)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _sessionWrapper = sessionWrapper;
+            _webHelper = webHelper;
         }
 
         public List<Wallpaper> GetSearchResult(string q)
@@ -107,7 +111,7 @@ namespace Walltage.Service.Services
             }
 
             var fileExtension = System.IO.Path.GetExtension(model.file.FileName);
-            var allowedExtensions = new List<string> { ".jpg", ".jpeg", ".tiff" };
+            var allowedExtensions = new List<string> { ".jpg", ".jpeg", ".tiff", ".png" };
             if (!string.IsNullOrWhiteSpace(fileExtension))
                 fileExtension = fileExtension.ToLowerInvariant();
             else
@@ -122,13 +126,13 @@ namespace Walltage.Service.Services
                 return result;
             }
 
-            if (!System.IO.Directory.Exists(System.Web.Hosting.HostingEnvironment.MapPath("/App_Data/Uploads")))
-                System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("/App_Data/Uploads"));
+            if (!System.IO.Directory.Exists(System.Web.Hosting.HostingEnvironment.MapPath("/Uploads")))
+                System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("/Uploads"));
 
             var lastWallpaper = _unitOfWork.WallpaperRepository.Table().OrderByDescending(x => x.Id).FirstOrDefault();
             string fileName = lastWallpaper == null ? "walltage-1" : "walltage-" + (lastWallpaper.Id + 1);
             model.ImgPath = string.Format("{0}{1}", fileName, fileExtension);
-            string filePath = System.IO.Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/Uploads"), model.ImgPath);
+            string filePath = System.IO.Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~/Uploads"), model.ImgPath);
 
             var tagList = PrepareTagList(model.Tags);
 
@@ -150,6 +154,14 @@ namespace Walltage.Service.Services
             if (!System.IO.File.Exists(filePath))
             {
                 model.file.SaveAs(filePath);
+
+                if (!System.IO.Directory.Exists(System.Web.Hosting.HostingEnvironment.MapPath("/Uploads/Thumbs")))
+                    System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("/Uploads/Thumbs"));
+
+                System.Drawing.Image image = System.Drawing.Image.FromFile(filePath);
+                image = _webHelper.CreateThumbnail(image, new System.Drawing.Size(256, 250), true);
+                image.Save(System.Web.Hosting.HostingEnvironment.MapPath("~/Uploads/Thumbs/") + fileName);
+                image.Dispose();           
             }
 
             return result;
