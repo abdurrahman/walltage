@@ -129,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\app\category.js" />
     <Content Include="Assets\images\search-bg.jpg" />
     <Content Include="Assets\images\search-bg2.jpg" />
     <Content Include="Assets\images\search-bg3.jpg" />

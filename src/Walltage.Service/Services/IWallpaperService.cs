@@ -6,7 +6,7 @@ namespace Walltage.Service.Services
 {
     public interface IWallpaperService
     {
-        List<Wallpaper> GetSearchResult(string q);
+        List<Wallpaper> GetSearchResult(string q, string resolution);
 
         List<Wallpaper> GetLastUploads(int count);
 

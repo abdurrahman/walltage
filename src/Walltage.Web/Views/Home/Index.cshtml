@@ -10,7 +10,7 @@
     <div class="jumbotron">
         <h1>Hi there !</h1>
         <p>This web site maybe could makes beautify your desktop screen.</p>
-        @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+        @using (Html.BeginForm("Search", "Home", FormMethod.Get ))
         {
             <form ng-controller="SearchController">
                 <div class="input-group col-md-6 col-md-offset-3">
@@ -27,44 +27,11 @@
 <section class="category-section">
     <div class="container">
         <div class="row">
-            @*<p>{{message}}</p>
-            <div class="col-md-3">
-                <ul>
-                    <li ng-repeat="c in categories"><a href="~/home/category/{{c.CategoryId}}" title="{{c.Name}}">{{c.Name}}</a></li>
+            @*<div class="col-md-3">
+                <ul data-bind="foreach: Categories">
+                    <li><a data-bind="attr: {href: 'Category/' + Id, title: Name }, text: Name"></a></li>
                 </ul>
             </div>*@
-            <div class="col-md-3">
-                <ul>
-                    <li><a href="">ABSTRACT</a></li>
-                    <li><a href="">ANIMALS</a></li>
-                    <li><a href="">ARCHITECTURE</a></li>
-                    <li><a href="">BUSINESS</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <ul>
-                    <li><a href="">CELEBRATIONS</a></li>
-                    <li><a href="">CITY</a></li>
-                    <li><a href="">ELECTRONICS</a></li>
-                    <li><a href="">LANDSCAPSE</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <ul>
-                    <li><a href="">MUSIC</a></li>
-                    <li><a href="">MOVIE</a></li>
-                    <li><a href="">SPORT</a></li>
-                    <li><a href="">SCI-FI</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <ul>
-                    <li><a href="">NATURE</a></li>
-                    <li><a href="">PEOPLE</a></li>
-                    <li><a href="">SCIENCE</a></li>
-                    <li><a href="">TRAVEL</a></li>
-                </ul>
-            </div>
         </div>
     </div>
 
@@ -81,88 +48,14 @@
                     <a data-bind="attr: { href: 'Wallpaper/' + Id, title: Name }">view more...</a>
                 </figcaption>
             </figure>
-
-            @*<figure class="effect-apollo">
-                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-237110.jpg" alt="" />
-                <figcaption>
-                    <h2>Strong <span>Apollo</span></h2>
-                    <p>Apollo's last game of pool was so strange.</p>
-                    <a href="">view more...</a>
-                </figcaption>
-            </figure>
-
-            <figure class="effect-apollo">
-                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-227057.jpg" alt="" />
-                <figcaption>
-                    <h2>Strong <span>Apollo</span></h2>
-                    <p>Apollo's last game of pool was so strange.</p>
-                    <a href="">view more...</a>
-                </figcaption>
-            </figure>
-            <figure class="effect-apollo">
-                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-227372.jpg" alt="" />
-                <figcaption>
-                    <h2>Strong <span>Apollo</span></h2>
-                    <p>Apollo's last game of pool was so strange.</p>
-                    <a href="">view more...</a>
-                </figcaption>
-            </figure>
-            <figure class="effect-apollo">
-                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-114220.jpg" alt="" />
-                <figcaption>
-                    <h2>Strong <span>Apollo</span></h2>
-                    <p>Apollo's last game of pool was so strange.</p>
-                    <a href="">view more...</a>
-                </figcaption>
-            </figure>
-            <figure class="effect-apollo">
-                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-204738.jpg" alt="" />
-                <figcaption>
-                    <h2>Strong <span>Apollo</span></h2>
-                    <p>Apollo's last game of pool was so strange.</p>
-                    <a href="">view more...</a>
-                </figcaption>
-            </figure>
-
-            <figure class="effect-apollo">
-                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-224998.jpg" alt="" />
-                <figcaption>
-                    <h2>Strong <span>Apollo</span></h2>
-                    <p>Apollo's last game of pool was so strange.</p>
-                    <a href="">view more...</a>
-                </figcaption>
-            </figure>
-            <figure class="effect-apollo">
-                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-56240.jpg" alt="" />
-                <figcaption>
-                    <h2>Strong <span>Apollo</span></h2>
-                    <p>Apollo's last game of pool was so strange.</p>
-                    <a href="">view more...</a>
-                </figcaption>
-            </figure>
-            <figure class="effect-apollo">
-                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-164335.jpg" alt="" />
-                <figcaption>
-                    <h2>Strong <span>Apollo</span></h2>
-                    <p>Apollo's last game of pool was so strange.</p>
-                    <a href="">view more...</a>
-                </figcaption>
-            </figure>
-            <figure class="effect-apollo">
-                <img class="lazy" data-original="http://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-117987.jpg" alt="" />
-                <figcaption>
-                    <h2>Strong <span>Apollo</span></h2>
-                    <p>Apollo's last game of pool was so strange.</p>
-                    <a href="">view more...</a>
-                </figcaption>
-            </figure>*@
         </div>
     </div>
 </section>
 @section Scripts {
+    <script src="/assets/app/category.js"></script>
     <script>
+
         function WallpaperViewModel() {
-            debugger;
             var self = this;
             self.Id = ko.observable("");
             self.Name = ko.observable("");
@@ -190,8 +83,7 @@
             });
         }
 
-        var viewModel = new WallpaperViewModel();
-        console.log(viewModel);
-        ko.applyBindings(viewModel);
+        ko.applyBindings(new WallpaperViewModel());
+        //ko.applyBindings({ Wallpaper: new WallpaperViewModel(), Categories: new CategoryViewModel() });
     </script>
 }

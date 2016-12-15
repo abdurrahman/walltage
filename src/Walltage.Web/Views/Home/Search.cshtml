@@ -1,4 +1,4 @@
-﻿@*@model Walltage.WebUI.Models.WallpaperViewModel*@
+﻿@model Walltage.Service.Models.WallpaperViewModel
 @{
     ViewBag.Title = "Wallpaper Search Result";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 
 <section class="feed-section" style="background:#111">
     <div class="container">
-        @*@if (ViewBag.Count > 0)
+        @if (ViewBag.Count > 0)
         {
             <h1><i class="fa fa-search"></i> Search Result : @ViewBag.Count wallpapers found !</h1>
         }
@@ -40,7 +40,7 @@
 
             }
 
-        </div>*@
+        </div>
     </div>
 </section>
 

@@ -1,5 +1,6 @@
 ﻿using log4net;
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,13 +31,42 @@ namespace Walltage.Service.Services
             _webHelper = webHelper;
         }
 
-        public List<Wallpaper> GetSearchResult(string q)
+        public List<Wallpaper> GetSearchResult(string q, string resolution)
         {
-            var query = from c in _unitOfWork.WallpaperRepository.Table()
-                        orderby c.Id
-                        where c.Name.Contains(q)
-                        select c;
+            //var query = _unitOfWork.WallpaperAndTagMappingRepository.Table()
+            //    .Include(x => x.Wallpaper)
+            //    .Include(x => x.Tag)
+            //    .Where(x => x.Wallpaper.Name.Contains(q) || x.Tag.Name.Contains(q))
+            //    .Select(x => x.Wallpaper);
+
+            //var realQuery = _unitOfWork.WallpaperRepository.Table()
+            //    .SelectMany(x => x.TagList.Where(t=> t.Tag.Name))
+
+            var query = _unitOfWork.WallpaperRepository.Table()
+                .Include(x => x.Resolution)
+                .Include(x => x.TagList)
+                .Where(x => x.Name.Contains(q) ||
+                            x.Resolution.Name == resolution);
+
             var searchResult = query.ToList();
+
+            var queryTag = _unitOfWork.TagRepository.Table()
+                .Include(x => x.WallpaperList)
+                .Where(x => x.Name.Contains(q))
+                .Select(x => x.WallpaperList);
+
+            var queryTagList = queryTag.ToList();
+            //var query = _unitOfWork.WallpaperRepository.Table()
+            //    .Include(x => x.TagList)
+            //    .Where(x => x.Name.Contains(q))
+            //    .SelectMany(x => x.TagList.Where(t => t.Tag.Name.Contains(q)))
+                //.Select(x => x);
+                //.Include(x => x.TagList);
+
+            //var query = from c in _unitOfWork.WallpaperRepository.Table()
+            //            orderby c.Id
+            //            where c.Name.Contains(q) || c.ta
+            //            select c;
             return searchResult;
         }
 

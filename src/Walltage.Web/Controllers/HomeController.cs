@@ -41,16 +41,29 @@ namespace Walltage.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        public ActionResult Search(string q)
+        public JsonResult GetCategories()
         {
-            var result = _wallpaperService.GetSearchResult(q);
+            var result = _wallpaperService.GetCategoryList();
+            if (result == null)
+            {
+                ModelState.AddModelError("", "Categories getting error occurred, try again !");
+                _logger.Warn("Categories getting error occurred, try again !");
+                return Json(null);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Search(string q, string resolution, string categoryId)
+        {
+            var result = _wallpaperService.GetSearchResult(q, resolution);
+            ViewBag.Count = result.Count;
             if (result == null)
             {
                 ModelState.AddModelError("", "Not found, try again!");
                 return View();
             }
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return View(result);
         }
 
         public ViewResult Faq()
