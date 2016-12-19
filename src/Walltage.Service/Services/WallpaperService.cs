@@ -18,55 +18,44 @@ namespace Walltage.Service.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILog _logger;
         private readonly ISessionWrapper _sessionWrapper;
+        private readonly ICookieWrapper _cookieWrapper;
         private readonly IWebHelper _webHelper;
 
         public WallpaperService(ILog logger,
             IUnitOfWork unitOfWork,
             ISessionWrapper sessionWrapper,
+            ICookieWrapper cookieWrapper,
             IWebHelper webHelper)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _sessionWrapper = sessionWrapper;
+            _cookieWrapper = cookieWrapper;
             _webHelper = webHelper;
         }
 
-        public List<Wallpaper> GetSearchResult(string q, string resolution)
+        public List<Wallpaper> GetSearchResult(string q, string resolution, int? categoryId)
         {
-            //var query = _unitOfWork.WallpaperAndTagMappingRepository.Table()
-            //    .Include(x => x.Wallpaper)
-            //    .Include(x => x.Tag)
-            //    .Where(x => x.Wallpaper.Name.Contains(q) || x.Tag.Name.Contains(q))
-            //    .Select(x => x.Wallpaper);
+            var wallpaperList = new List<Wallpaper>(100);
 
-            //var realQuery = _unitOfWork.WallpaperRepository.Table()
-            //    .SelectMany(x => x.TagList.Where(t=> t.Tag.Name))
+            //var tagQuery = _unitOfWork.TagRepository.Table()
+            //    .Include(x => x.WallpaperList)
+            //    .Where(x => x.Name.Contains(q))
+            //    .SelectMany(x => x.WallpaperList.Select(w => w.Wallpaper));
 
-            var query = _unitOfWork.WallpaperRepository.Table()
-                .Include(x => x.Resolution)
-                .Include(x => x.TagList)
-                .Where(x => x.Name.Contains(q) ||
-                            x.Resolution.Name == resolution);
+            //var tagList = tagQuery.ToList();
+
+            var query = _unitOfWork.WallpaperAndTagMappingRepository.Table()
+                .Include(x => x.Wallpaper.Category)
+                .Include(x => x.Wallpaper.Resolution)
+                .Include(x => x.Tag)
+                .Where(x => x.Wallpaper.Name.Contains(q) ||
+                            x.Tag.Name.Contains(q) ||
+                            x.Wallpaper.Resolution.Name == resolution)
+                .Select(x => x.Wallpaper);
 
             var searchResult = query.ToList();
 
-            var queryTag = _unitOfWork.TagRepository.Table()
-                .Include(x => x.WallpaperList)
-                .Where(x => x.Name.Contains(q))
-                .Select(x => x.WallpaperList);
-
-            var queryTagList = queryTag.ToList();
-            //var query = _unitOfWork.WallpaperRepository.Table()
-            //    .Include(x => x.TagList)
-            //    .Where(x => x.Name.Contains(q))
-            //    .SelectMany(x => x.TagList.Where(t => t.Tag.Name.Contains(q)))
-                //.Select(x => x);
-                //.Include(x => x.TagList);
-
-            //var query = from c in _unitOfWork.WallpaperRepository.Table()
-            //            orderby c.Id
-            //            where c.Name.Contains(q) || c.ta
-            //            select c;
             return searchResult;
         }
 
@@ -102,7 +91,6 @@ namespace Walltage.Service.Services
             return topImagesThisWeek;
         }
 
-
         public List<Category> GetCategoryList()
         {
             var query = _unitOfWork.CategoryRepository.Table();
@@ -116,7 +104,6 @@ namespace Walltage.Service.Services
             var resolutionList = query.ToList();
             return resolutionList;
         }
-
 
         public DatabaseOperationResult WallpaperInsert(WallpaperViewModel model)
         {
@@ -191,7 +178,7 @@ namespace Walltage.Service.Services
                 System.Drawing.Image image = System.Drawing.Image.FromFile(filePath);
                 image = _webHelper.CreateThumbnail(image, new System.Drawing.Size(256, 250), true);
                 image.Save(System.Web.Hosting.HostingEnvironment.MapPath("~/Uploads/Thumbs/") + fileName);
-                image.Dispose();           
+                image.Dispose();
             }
 
             return result;
@@ -229,6 +216,41 @@ namespace Walltage.Service.Services
                 tagList.Add(new WallpaperAndTagMapping { TagId = isTagExist.Id });
             }
             return tagList;
+        }
+
+        // Todo: Add view count logic in this method
+        public WallpaperViewModel GetWallpaperDetail(int wallpaperId)
+        {
+            var wallpaper = _unitOfWork.WallpaperRepository.Table()
+                .Include(x => x.Category)
+                .Include(x => x.Resolution)
+                .Include(x => x.User)
+                .Where(x => x.Id == wallpaperId)
+                .Select(x => new WallpaperViewModel
+                {
+                    CategoryName = x.Category.Name,
+                    ResolutionName = x.Resolution.Name,
+                    UploaderName = x.User.Username,
+                    UploaderId = x.UploaderId,
+                    Size = x.Size / 1024,
+                    ImgPath = x.ImgPath,
+                    Name = x.Name,
+                    UploadDate = x.AddedDate,
+                    ViewCount = x.ViewCount,
+                });
+
+            if (wallpaper == null)
+                return null;
+
+            return wallpaper.FirstOrDefault();
+        }
+
+        public void IncreaseToViewCount(Wallpaper wallpaper)
+        {
+            wallpaper.ViewCount = wallpaper.ViewCount + 1;
+
+            _unitOfWork.WallpaperRepository.Update(wallpaper);
+            _unitOfWork.Save();
         }
     }
 }

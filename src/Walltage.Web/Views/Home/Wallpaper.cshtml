@@ -1,5 +1,5 @@
-﻿@*@model Walltage.WebUI.Models.WallpaperViewModel
-@using Walltage.WebUI.Infrastructures*@
+﻿@model Walltage.Service.Models.WallpaperViewModel
+@using Walltage.Service.Helpers
 
 @{
     ViewBag.Title = "Wallpaper";
@@ -8,24 +8,24 @@
 
 <section class="detail-section">
     <aside class="sidebar">
-        @*<div class="properties">
+        <div class="properties">
             <h2>Properties</h2><hr />
             <table class="table table-hover">
                 <tbody>
                     <tr>
                         <th>Resolution</th>
                         <td>:</td>
-                        <td>@Model.Resolution.Name</td>
+                        <td>@Model.ResolutionName</td>
                     </tr>
                     <tr>
                         <th>Size</th>
                         <td>:</td>
-                        <td>@{ int size = (Model.Size / 1024); @size }  KB</td>
+                        <td>@Model.Size KB</td>
                     </tr>
                     <tr>
                         <th>Category</th>
                         <td>:</td>
-                        <td>@Model.Category.Name</td>
+                        <td>@Model.CategoryName</td>
                     </tr>
                     <tr>
                         <th>Views</th>
@@ -35,16 +35,16 @@
                     <tr>
                         <th>Added</th>
                         <td>:</td>
-                        <td>@StaticHelper.TimeAgo(Model.UploadDate)</td>
+                        <td>@WebHelper.TimeAgo(Model.UploadDate)</td>
                     </tr>
                     <tr>
                         <th>Uploaded By</th>
                         <td>:</td>
-                        <td><a href="">@Model.UploaderId</a></td>
+                        <td><a href="~/user/@Model.UploaderId">@Model.UploaderName</a></td>
                     </tr>
                 </tbody>
             </table>
-        </div>*@
+        </div>
         <div class="tags">
             <h2>Tags</h2><hr />
             <ul>
@@ -61,6 +61,6 @@
         </p>
     </aside>
     <div class="showcase">
-        @*<img class="wallpaper unselectable" src="@Url.Content("~/Wallpapers/" + @Model.ImgPath)" alt="@Model.Name" />*@
+        <img class="wallpaper unselectable" src="@Url.Content("~/uploads/" + @Model.ImgPath)" alt="@Model.Name" />
     </div>
 </section>

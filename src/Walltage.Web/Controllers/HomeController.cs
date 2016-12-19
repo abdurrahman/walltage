@@ -54,16 +54,32 @@ namespace Walltage.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Search(string q, string resolution, string categoryId)
+        public ActionResult Search(string q, string resolution, int? categoryId)
         {
-            var result = _wallpaperService.GetSearchResult(q, resolution);
+            var result = _wallpaperService.GetSearchResult(q, resolution, categoryId);
             ViewBag.Count = result.Count;
             if (result == null)
             {
                 ModelState.AddModelError("", "Not found, try again!");
                 return View();
             }
-            return View(result);
+            var model = new WallpaperViewModel { WallpaperList = result };
+            return View(model);
+        }
+
+        public JsonResult GetRandomWallpapers()
+        {
+            return Json(null);
+        }
+
+        public ViewResult Random()
+        {
+            return View();
+        }
+
+        public ViewResult MostViewed()
+        {
+            return View();
         }
 
         public ViewResult Faq()
@@ -104,8 +120,14 @@ namespace Walltage.Web.Controllers
 
         public ActionResult Wallpaper(int id)
         {
+            var result = _wallpaperService.GetWallpaperDetail(id);
+            if (result == null)
+            {
+                ModelState.AddModelError("", "Not found !");
+                return View();
+            }
 
-            return View();
+            return View(result);
         }
 
         [UserAuthorize]

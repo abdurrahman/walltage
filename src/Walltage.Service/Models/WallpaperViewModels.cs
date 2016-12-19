@@ -18,6 +18,7 @@ namespace Walltage.Service.Models
         public int Size { get; set; }
         public int ViewCount { get; set; }
         public int FavoriteCount { get; set; }
+
         [Display(Name = "Tags")]
         public string Tags { get; set; }
         public string ImgPath { get; set; }
@@ -26,9 +27,14 @@ namespace Walltage.Service.Models
 
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+
         [Display(Name = "Resolution")]
         public int ResolutionId { get; set; }
-        public string UploaderId { get; set; }
+        public string ResolutionName { get; set; }
+
+        public int UploaderId { get; set; }
+        public string UploaderName { get; set; }
 
         public HttpPostedFileBase file { get; set; }
 
