@@ -48,11 +48,15 @@
         <div class="tags">
             <h2>Tags</h2><hr />
             <ul>
-                <li><a href="">#nature</a></li>
-                <li><a href="">#mountain</a></li>
-                <li><a href="">#fresh</a></li>
-                <li><a href="">#spirit</a></li>
-                <li><a href="">#love</a></li>
+                @{
+                    if (Model.TagList.Count > 0)
+                    {
+                        foreach (var item in Model.TagList)
+                        {
+                            <li><a href="/home/tag/@item.Id">@item.Name</a></li>
+                        }
+                    }
+                }
             </ul>
         </div>
         <p>

@@ -39,6 +39,8 @@ namespace Walltage.Service.Models
         public HttpPostedFileBase file { get; set; }
 
         public Wallpaper Wallpaper { get; set; }
+
+        public List<Tag> TagList { get; set; }
         public List<Category> CategoryList { get; set; }
         public List<Resolution> ResolutionList { get; set; }
 

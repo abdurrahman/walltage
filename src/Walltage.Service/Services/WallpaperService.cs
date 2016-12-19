@@ -38,19 +38,11 @@ namespace Walltage.Service.Services
         {
             var wallpaperList = new List<Wallpaper>(100);
 
-            //var tagQuery = _unitOfWork.TagRepository.Table()
-            //    .Include(x => x.WallpaperList)
-            //    .Where(x => x.Name.Contains(q))
-            //    .SelectMany(x => x.WallpaperList.Select(w => w.Wallpaper));
-
-            //var tagList = tagQuery.ToList();
-
             var query = _unitOfWork.WallpaperAndTagMappingRepository.Table()
                 .Include(x => x.Wallpaper.Category)
                 .Include(x => x.Wallpaper.Resolution)
                 .Include(x => x.Tag)
-                .Where(x => x.Wallpaper.Name.Contains(q) ||
-                            x.Tag.Name.Contains(q) ||
+                .Where(x => x.Tag.Name.Contains(q) ||
                             x.Wallpaper.Resolution.Name == resolution)
                 .Select(x => x.Wallpaper);
 
@@ -160,7 +152,6 @@ namespace Walltage.Service.Services
                 AddedDate = DateTime.Now,
                 CategoryId = model.CategoryId,
                 ImgPath = model.ImgPath,
-                Name = model.Name,
                 ResolutionId = model.ResolutionId,
                 Size = model.file.ContentLength,
                 UploaderId = _sessionWrapper.UserId,
@@ -225,6 +216,7 @@ namespace Walltage.Service.Services
                 .Include(x => x.Category)
                 .Include(x => x.Resolution)
                 .Include(x => x.User)
+                .Include(x => x.TagList)
                 .Where(x => x.Id == wallpaperId)
                 .Select(x => new WallpaperViewModel
                 {
@@ -234,9 +226,9 @@ namespace Walltage.Service.Services
                     UploaderId = x.UploaderId,
                     Size = x.Size / 1024,
                     ImgPath = x.ImgPath,
-                    Name = x.Name,
                     UploadDate = x.AddedDate,
                     ViewCount = x.ViewCount,
+                    TagList = x.TagList.Select(t => t.Tag).ToList()
                 });
 
             if (wallpaper == null)
