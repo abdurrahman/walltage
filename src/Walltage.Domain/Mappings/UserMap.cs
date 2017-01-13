@@ -12,7 +12,7 @@ namespace Walltage.Domain.Mappings
             Property(t => t.LastActivity).IsOptional();
             Property(t => t.IPAddress).IsOptional().HasMaxLength(45);
             
-            //HasRequired(t => t.UserRole).WithMany().HasForeignKey(t => t.UserRoleId).WillCascadeOnDelete(false);
+            HasRequired(t => t.UserRole).WithMany().HasForeignKey(t => t.UserRoleId).WillCascadeOnDelete(false);
 
             ToTable("User");
         }
