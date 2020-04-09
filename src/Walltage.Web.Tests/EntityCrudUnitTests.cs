@@ -52,7 +52,7 @@ namespace Walltage.Web.Tests
                 _accountService.Register(new Service.Models.RegisterViewModel
                 {
                     Username = "abdurrahman",
-                    Password = "71106761",
+                    Password = "123456",
                     Email = "abdurrahman@uykusuzadam.com"
                 });
                 _logger.Info("User has registered successfully !");
